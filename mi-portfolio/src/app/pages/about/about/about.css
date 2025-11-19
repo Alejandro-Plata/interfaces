@@ -59,12 +59,12 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
-  filter: grayscale(100%); /* Estilo Noir */
   transition: filter 0.5s ease;
+  user-select: none;
 }
 
 .profile-frame:hover .profile-img {
-  filter: grayscale(0%); /* Color al pasar el mouse */
+  filter: grayscale(100%); /* Estilo Noir */
 }
 
 /* Estadísticas HUD */
@@ -75,6 +75,7 @@
   margin-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1.5rem;
+  user-select: none;
 }
 
 .stat-item {
@@ -163,6 +164,7 @@
 
 /* Botón Descargar */
 .btn-download {
+  user-select: none;
   display: inline-flex;
   align-items: center;
   gap: 10px;

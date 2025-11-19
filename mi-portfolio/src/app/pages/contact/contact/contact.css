@@ -1,0 +1,61 @@
+.contact-wrapper {
+    /* Mantenemos el estilo de panel oscuro/glassmorphism si lo desea */
+    max-width: 600px; /* Limita el ancho para centrar el contenido */
+    padding: 60px 30px;
+    /* Adaptamos el estilo Glass-Panel, pero más sutil */
+    background: var(--bg-panel);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    box-shadow: var(--glow-cyan); /* Sombra sutil de cian para darle enfoque */
+}
+
+.contact-wrapper .subtitle {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--accent-gold); /* El número de sección en dorado */
+    font-family: 'Fira Code', monospace; /* Opcional: usar fuente monoespaciada para código/números */
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.contact-wrapper h1 {
+    font-size: clamp(2rem, 5vw, 3rem); /* Tamaño responsivo */
+    margin-bottom: 20px;
+    color: var(--text-main);
+}
+
+.contact-wrapper p {
+    max-width: 500px;
+    margin: 0 auto 35px auto;
+    line-height: 1.6;
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* Reutilizamos los estilos del CTA-BUTTON (Decir Hola) */
+.email-btn {
+    /* Hereda todos los estilos de .cta-button para consistencia */
+    display: inline-block;
+    padding: 15px 40px;
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.email-btn:hover {
+    background: rgba(0, 240, 255, 0.1);
+    box-shadow: var(--glow-cyan);
+    color: #fff;
+}
