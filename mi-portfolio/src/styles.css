@@ -34,6 +34,13 @@ body {
   overflow-x: hidden;
 }
 
+.content-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 app-root {
   min-height: 100vh;
   display: flex;
@@ -43,6 +50,8 @@ app-root {
 main {
   flex: 1;
 }
+
+.highlight-gold { color: var(--accent-gold); }
 
 h1, h2, h3 {
   font-family: 'Montserrat', sans-serif;
@@ -145,7 +154,8 @@ h1, h2, h3 {
 .role .accent { color: var(--accent-gold); }
 
 .bio-snippet {
-  max-width: 500px;
+  max-width: 700px;
+  text-align: justify;
   line-height: 1.6;
   margin-bottom: 3rem;
   color: var(--text-main);
