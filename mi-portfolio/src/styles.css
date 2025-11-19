@@ -1,0 +1,260 @@
+/* Importar fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Open+Sans:wght@300;400&display=swap');
+
+:root {
+  /* Paleta de Colores */
+  --bg-deep: #050505;
+  --bg-panel: rgba(20, 20, 20, 0.7);
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
+  
+  /* Acentos */
+  --accent-cyan: #00F0FF;
+  --accent-gold: #D4AF37;
+  
+  /* Efectos */
+  --glass-blur: blur(12px);
+  --glow-cyan: 0 0 15px rgba(0, 240, 255, 0.3);
+  --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+  
+  /* Espaciado */
+  --section-spacing: 120px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  font-family: 'Open Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1, h2, h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-gold);
+  border-radius: 4px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2; /* Encima del canvas 3D */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
+}
+
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text-main);
+}
+
+.dot { color: var(--accent-cyan); }
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover { color: var(--accent-gold); }
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.greeting {
+  color: var(--accent-cyan);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.name {
+  font-size: 4rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #fff, #a0a0a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.role {
+  font-size: 2rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+.role .accent { color: var(--accent-gold); }
+
+.bio-snippet {
+  max-width: 500px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  color: var(--text-main);
+}
+
+/* Botón CTA Futurista */
+.cta-button {
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button:hover {
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: var(--glow-cyan);
+  color: #fff;
+}
+
+/* Tarjetas Estilo Glassmorphism */
+.glass-card, .project-card {
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 3rem;
+  border-radius: 4px; /* Bordes casi rectos para look técnico */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Acento dorado sutil en tarjetas */
+.glass-card::before, .project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background: var(--accent-gold);
+  transition: height 0.5s ease;
+}
+
+.glass-card:hover::before, .project-card:hover::before {
+  height: 100%;
+}
+
+/* Grid de Skills */
+.skills-grid {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.skill {
+  border: 1px solid var(--text-muted);
+  padding: 5px 15px;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  color: var(--text-muted);
+}
+
+/* Grid de Proyectos */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.project-card {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.project-card h3 { color: var(--accent-cyan); margin-bottom: 0.5rem; }
+.tech-stack span { font-size: 0.75rem; margin-right: 10px; color: var(--accent-gold); }
+
+/* Footer */
+.footer {
+  padding: 2rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.socials {
+  margin-top: 5px;
+}
+
+.socials a {
+  color: var(--text-main);
+  margin: 0 10px;
+  text-decoration: none;
+}

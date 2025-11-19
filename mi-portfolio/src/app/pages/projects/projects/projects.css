@@ -1,0 +1,155 @@
+/* --- SECCIÓN PROYECTOS --- */
+.section-projects {
+  padding: 100px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.section-header {
+  margin-bottom: 3rem;
+}
+
+.section-desc {
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  max-width: 600px;
+}
+
+/* --- GRID LAYOUT --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Responsive automático */
+  gap: 1.5rem;
+}
+
+/* --- TARJETA (Minimalista) --- */
+.project-card {
+  background-color: rgba(10, 10, 10, 0.5); /* Oscuro y sutil */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 2rem 1.75rem;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  backdrop-filter: blur(5px); /* Blur suave, no pesado */
+}
+
+/* Efecto Hover: Se eleva y el borde brilla */
+.project-card:hover {
+  transform: translateY(-7px);
+  background-color: rgba(20, 20, 20, 0.8);
+  border-color: var(--accent-cyan); /* El borde cambia a cian */
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* --- CABECERA TARJETA (Iconos) --- */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.folder-icon {
+  font-size: 2rem;
+  color: var(--accent-gold); /* Carpetas doradas */
+}
+
+.github-link svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-muted);
+  transition: stroke 0.3s ease;
+}
+
+.github-link:hover svg {
+  stroke: var(--accent-cyan); /* Logo brilla en cian */
+}
+
+/* --- TEXTOS TARJETA --- */
+.project-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s;
+}
+
+.project-card:hover .project-title {
+  color: var(--accent-cyan);
+}
+
+.project-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  flex-grow: 1; /* Empuja la lista de tecnologías abajo */
+}
+
+/* --- LISTA TECNOLOGÍAS --- */
+.tech-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-family: 'Fira Code', monospace; /* Fuente monoespaciada opcional o usar Open Sans */
+  font-size: 0.75rem;
+}
+
+.tech-list li {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.tech-list li::before { content: '• '; color: var(--accent-gold); } 
+
+.projects-glass-panel {
+  /* Estilos de Glassmorphism idénticos al panel 'Sobre Mí' */
+  background: rgba(20, 20, 20, 0.6); 
+  backdrop-filter: blur(20px); 
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4rem;
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  
+  /* Aseguramos que la cuadrícula de proyectos interna tenga margen respecto al borde */
+}
+
+.project-card img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+
+  /* Estilo Visual */
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0.9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  /* Configuración de Sombra - Opcional, pero añade profundidad */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.project-card:hover img {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+/* Decoración de borde dorado a la izquierda (idéntica a 'Sobre Mí') */
+.projects-glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-gold));
+}
+
