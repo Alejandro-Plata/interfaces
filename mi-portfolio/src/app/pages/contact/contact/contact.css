@@ -3,6 +3,98 @@
   background: rgba(0, 0, 0, 0.65);
   padding: 3rem;
   border-radius: 20px;
+  width: 100%;
+  min-width: 600px;
+  margin-top: 100px;
+  text-align: justify;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+}
+
+/* Número de sección */
+.section-number {
+  color: #d4c663;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+/* Título */
+.title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+/* Descripción */
+.description {
+  color: #cccccc;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Inputs */
+input,
+textarea {
+  width: 100%;
+  background: rgba(15, 15, 15, 0.85);
+  border: 1px solid #00eaff;
+  padding: 1rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 12px;
+  transition: 0.3s;
+  font-family: 'Montserrat';
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 12px #00eaff;
+}
+
+/* Botón */
+button {
+  user-select: none;
+  display: flex;
+  width: fit-content;
+  margin: 5px auto 0 auto;
+  gap: 10px;
+  padding: 12px 30px;
+  background: transparent;
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--accent-gold);
+  color: #000;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Contenedor principal */
+.contact-card {
+  background: rgba(0, 0, 0, 0.65);
+  padding: 3rem;
+  border-radius: 20px;
+  width: 100%;
   min-width: 600px;
   margin-top: 100px;
   text-align: justify;
@@ -91,4 +183,21 @@ button:hover {
 button:disabled {
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* Mobile Adaptation */
+@media (max-width: 768px) {
+  .contact-card {
+    min-width: 0;
+    /* Reset min-width so it can shrink */
+    width: 100%;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+    margin-top: 60px;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
 }

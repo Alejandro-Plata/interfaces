@@ -7,16 +7,16 @@
   --bg-panel: rgba(20, 20, 20, 0.7);
   --text-main: #e0e0e0;
   --text-muted: #a0a0a0;
-  
+
   /* Acentos */
   --accent-cyan: #00F0FF;
   --accent-gold: #D4AF37;
-  
+
   /* Efectos */
   --glass-blur: blur(12px);
   --glow-cyan: 0 0 15px rgba(0, 240, 255, 0.3);
   --border-gold: 1px solid rgba(212, 175, 55, 0.3);
-  
+
   /* Espaciado */
   --section-spacing: 120px;
 }
@@ -51,24 +51,16 @@ main {
   flex: 1;
 }
 
-.highlight-gold { color: var(--accent-gold); }
+.highlight-gold {
+  color: var(--accent-gold);
+}
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
-}
-
-/* Scrollbar personalizado */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-deep);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--accent-gold);
-  border-radius: 4px;
 }
 
 .container {
@@ -76,7 +68,8 @@ h1, h2, h3 {
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
-  z-index: 2; /* Encima del canvas 3D */
+  z-index: 2;
+  /* Encima del canvas 3D */
 }
 
 /* Navbar */
@@ -89,7 +82,7 @@ h1, h2, h3 {
   width: 100%;
   top: 0;
   z-index: 10;
-  background: linear-gradient(to bottom, rgba(5,5,5,0.9), transparent);
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.9), transparent);
 }
 
 .logo {
@@ -97,9 +90,12 @@ h1, h2, h3 {
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--text-main);
+  text-decoration: none;
 }
 
-.dot { color: var(--accent-cyan); }
+.dot {
+  color: var(--accent-cyan);
+}
 
 .nav-links {
   list-style: none;
@@ -116,7 +112,9 @@ h1, h2, h3 {
   transition: color 0.3s ease;
 }
 
-.nav-links a:hover { color: var(--accent-gold); }
+.nav-links a:hover {
+  color: var(--accent-gold);
+}
 
 /* Hero Section */
 .hero {
@@ -153,7 +151,9 @@ h1, h2, h3 {
   margin-bottom: 2rem;
 }
 
-.role .accent { color: var(--accent-gold); }
+.role .accent {
+  color: var(--accent-gold);
+}
 
 .bio-snippet {
   max-width: 700px;
@@ -185,18 +185,21 @@ h1, h2, h3 {
 }
 
 /* Tarjetas Estilo Glassmorphism */
-.glass-card, .project-card {
+.glass-card,
+.project-card {
   background: var(--bg-panel);
   backdrop-filter: var(--glass-blur);
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 3rem;
-  border-radius: 4px; /* Bordes casi rectos para look técnico */
+  border-radius: 4px;
+  /* Bordes casi rectos para look técnico */
   position: relative;
   overflow: hidden;
 }
 
 /* Acento dorado sutil en tarjetas */
-.glass-card::before, .project-card::before {
+.glass-card::before,
+.project-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -207,7 +210,8 @@ h1, h2, h3 {
   transition: height 0.5s ease;
 }
 
-.glass-card:hover::before, .project-card:hover::before {
+.glass-card:hover::before,
+.project-card:hover::before {
   height: 100%;
 }
 
@@ -248,14 +252,22 @@ h1, h2, h3 {
   transform: translateY(-5px);
 }
 
-.project-card h3 { color: var(--accent-cyan); margin-bottom: 0.5rem; }
-.tech-stack span { font-size: 0.75rem; margin-right: 10px; color: var(--accent-gold); }
+.project-card h3 {
+  color: var(--accent-cyan);
+  margin-bottom: 0.5rem;
+}
+
+.tech-stack span {
+  font-size: 0.75rem;
+  margin-right: 10px;
+  color: var(--accent-gold);
+}
 
 /* Footer */
 .footer {
   padding: 2rem 0;
   margin-top: 4rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
   color: var(--text-muted);
   font-size: 0.8rem;
@@ -269,4 +281,70 @@ h1, h2, h3 {
   color: var(--text-main);
   margin: 0 10px;
   text-decoration: none;
+}
+
+/* Mobile Adaptation */
+@media (max-width: 768px) {
+  :root {
+    --section-spacing: 60px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  /* Navbar Mobile */
+  .navbar {
+    padding: 1rem 1.5rem;
+    background: rgba(5, 5, 5, 0.95);
+  }
+
+  .nav-links {
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+  }
+
+  /* Hero Section Mobile */
+  .hero {
+    text-align: center;
+    padding-top: 100px;
+    /* Space for fixed navbar */
+  }
+
+  .name {
+    font-size: 2.5rem;
+  }
+
+  .role {
+    font-size: 1.2rem;
+  }
+
+  .bio-snippet {
+    font-size: 0.9rem;
+    text-align: center;
+    /* Better for mobile than justify */
+  }
+
+  /* Cards Mobile */
+  .glass-card,
+  .project-card {
+    padding: 1.5rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    /* Single column */
+    gap: 1.5rem;
+  }
+
+  /* Footer Mobile */
+  .footer {
+    margin-top: 2rem;
+  }
 }

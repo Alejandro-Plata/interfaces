@@ -3,6 +3,12 @@
   padding: 100px 0;
   position: relative;
   z-index: 2;
+  min-height: 100vh;
+  /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Center vertically */
 }
 
 .section-header {
@@ -19,15 +25,17 @@
 /* --- GRID LAYOUT --- */
 .projects-grid {
   display: grid;
-  grid-template-columns: 1fr; 
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   place-items: center;
 }
 
 /* --- TARJETA (Minimalista) --- */
 .project-card {
-  width: 700px;
-  background-color: rgba(10, 10, 10, 0.5); /* Oscuro y sutil */
+  width: 100%;
+  max-width: 700px;
+  background-color: rgba(10, 10, 10, 0.5);
+  /* Oscuro y sutil */
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 2rem 1.75rem;
   border-radius: 6px;
@@ -35,14 +43,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  backdrop-filter: blur(5px); /* Blur suave, no pesado */
+  backdrop-filter: blur(5px);
+  /* Blur suave, no pesado */
 }
 
 /* Efecto Hover: Se eleva y el borde brilla */
 .project-card:hover {
   transform: translateY(-7px);
   background-color: rgba(20, 20, 20, 0.8);
-  border-color: var(--accent-cyan); /* El borde cambia a cian */
+  border-color: var(--accent-cyan);
+  /* El borde cambia a cian */
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
@@ -62,7 +72,8 @@
 }
 
 .github-link:hover svg {
-  stroke: var(--accent-cyan); /* Logo brilla en cian */
+  stroke: var(--accent-cyan);
+  /* Logo brilla en cian */
 }
 
 /* --- TEXTOS TARJETA --- */
@@ -84,7 +95,8 @@
   line-height: 1.6;
   color: var(--text-muted);
   margin-bottom: 1.5rem;
-  flex-grow: 1; /* Empuja la lista de tecnologías abajo */
+  flex-grow: 1;
+  /* Empuja la lista de tecnologías abajo */
 }
 
 /* --- LISTA TECNOLOGÍAS --- */
@@ -93,7 +105,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  font-family: 'Fira Code', monospace; /* Fuente monoespaciada opcional o usar Open Sans */
+  font-family: 'Fira Code', monospace;
+  /* Fuente monoespaciada opcional o usar Open Sans */
   font-size: 0.75rem;
 }
 
@@ -102,18 +115,21 @@
   opacity: 0.8;
 }
 
-.tech-list li::before { content: '• '; color: var(--accent-gold); } 
+.tech-list li::before {
+  content: '• ';
+  color: var(--accent-gold);
+}
 
 .projects-glass-panel {
-  background: rgba(20, 20, 20, 0.6); 
-  backdrop-filter: blur(20px); 
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4rem;
   border-radius: 8px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   position: relative;
   overflow: hidden;
-  
+
   /* Aseguramos que la cuadrícula de proyectos interna tenga margen respecto al borde */
 }
 
@@ -133,8 +149,8 @@
 }
 
 .project-card:hover img {
-    opacity: 1;
-    transform: scale(1.02);
+  opacity: 1;
+  transform: scale(1.02);
 }
 
 .projects-glass-panel::before {
@@ -150,28 +166,55 @@
 /* 3. Posicionamiento del Contenedor de Enlaces (GitHub Icon) */
 .project-card .links {
   position: absolute;
-  bottom: 20px; /* Espaciado desde la parte superior de la imagen */
-  right: 20px; /* Espaciado desde la derecha de la imagen */
+  bottom: 20px;
+  /* Espaciado desde la parte superior de la imagen */
+  right: 20px;
+  /* Espaciado desde la derecha de la imagen */
   z-index: 10;
-  background-color: rgba(20, 20, 20, 0.8); /* Fondo semi-transparente para visibilidad */
+  background-color: rgba(20, 20, 20, 0.8);
+  /* Fondo semi-transparente para visibilidad */
   padding: 8px;
-  border-radius: 50%; /* Icono circular */
+  border-radius: 50%;
+  /* Icono circular */
   line-height: 1;
   transition: background-color 0.3s;
 }
 
 .project-card .links:hover {
-  background-color: var(--accent-cyan); /* Fondo brilla al hacer hover */
+  background-color: var(--accent-cyan);
+  /* Fondo brilla al hacer hover */
 }
 
 /* 4. Estilos del SVG de GitHub dentro del enlace */
 .github-link svg {
-  width: 20px; /* Reducido ligeramente */
+  width: 20px;
+  /* Reducido ligeramente */
   height: 20px;
-  stroke: var(--text-main); /* Hacemos que el color inicial sea más visible (no text-muted) */
+  stroke: var(--text-main);
+  /* Hacemos que el color inicial sea más visible (no text-muted) */
   transition: stroke 0.3s ease;
 }
 
 .github-link:hover svg {
-  stroke: var(--text-main); /* Mantenemos el color (o puedes cambiarlo a blanco: #fff) */
+  stroke: var(--text-main);
+  /* Mantenemos el color (o puedes cambiarlo a blanco: #fff) */
+}
+
+/* --- RESPONSIVE (Móviles) --- */
+@media (max-width: 768px) {
+  .projects-glass-panel {
+    padding: 2rem 1.5rem;
+  }
+
+  .project-card {
+    padding: 1.5rem;
+  }
+
+  .project-card img {
+    max-height: 250px;
+  }
+
+  .section-projects {
+    padding: 60px 0;
+  }
 }

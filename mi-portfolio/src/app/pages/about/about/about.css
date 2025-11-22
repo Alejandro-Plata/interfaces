@@ -1,10 +1,14 @@
 /* --- CENTRADO DE SECCIÓN --- */
 .section-full-center {
-  min-height: 100vh; /* Ocupa toda la altura de la pantalla */
+  min-height: 100vh;
+  /* Ocupa toda la altura de la pantalla */
   display: flex;
-  align-items: center; /* Centrado Vertical */
-  justify-content: center; /* Centrado Horizontal */
-  padding: 100px 20px; /* Espacio para que no choque con el header/footer */
+  align-items: center;
+  /* Centrado Vertical */
+  justify-content: center;
+  /* Centrado Horizontal */
+  padding: 100px 20px;
+  /* Espacio para que no choque con el header/footer */
   position: relative;
   z-index: 2;
 }
@@ -12,10 +16,13 @@
 /* --- PANEL DE CRISTAL (GLASSMORPHISM) --- */
 .about-glass-panel {
   display: grid;
-  grid-template-columns: 1fr 1.5fr; /* Izquierda más estrecha, derecha más ancha */
+  grid-template-columns: 1fr 1.5fr;
+  /* Izquierda más estrecha, derecha más ancha */
   gap: 4rem;
-  background: rgba(20, 20, 20, 0.6); /* Fondo semitransparente */
-  backdrop-filter: blur(20px); /* Efecto borroso potente */
+  background: rgba(20, 20, 20, 0.6);
+  /* Fondo semitransparente */
+  backdrop-filter: blur(20px);
+  /* Efecto borroso potente */
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 4rem;
   border-radius: 8px;
@@ -46,7 +53,8 @@
 .profile-frame {
   width: 200px;
   height: 200px;
-  border-radius: 50%; /* Circular */
+  border-radius: 50%;
+  /* Circular */
   border: 2px solid var(--accent-gold);
   padding: 5px;
   position: relative;
@@ -64,7 +72,8 @@
 }
 
 .profile-frame:hover .profile-img {
-  filter: grayscale(100%); /* Estilo Noir */
+  filter: grayscale(100%);
+  /* Estilo Noir */
 }
 
 /* Estadísticas HUD */
@@ -115,7 +124,9 @@
   margin-bottom: 2rem;
 }
 
-.highlight-cyan { color: var(--accent-cyan); }
+.highlight-cyan {
+  color: var(--accent-cyan);
+}
 
 /* Caja de Filosofía */
 .philosophy-box {
@@ -186,17 +197,40 @@
 /* --- RESPONSIVE (Móviles) --- */
 @media (max-width: 900px) {
   .about-glass-panel {
-    grid-template-columns: 1fr; /* Una sola columna */
+    grid-template-columns: 1fr;
+    /* Una sola columna */
     padding: 2rem;
     gap: 2rem;
   }
-  
+
   .about-visual {
     margin-bottom: 1rem;
   }
-  
+
   .section-full-center {
-    height: auto; /* Permitir scroll en pantallas pequeñas */
+    height: auto;
+    /* Permitir scroll en pantallas pequeñas */
     padding-top: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-glass-panel {
+    padding: 1.5rem;
+  }
+
+  .profile-frame {
+    width: 150px;
+    height: 150px;
+  }
+
+  .stats-hud {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .stat-item {
+    min-width: 80px;
   }
 }
