@@ -71,7 +71,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "outputPath": "dist/mi-portfolio",
+            "outputPath": "dist/mi-portfolio/browser",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
