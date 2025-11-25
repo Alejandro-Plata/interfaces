@@ -1,0 +1,55 @@
+<div class="list-container">
+    <!-- Header / Search -->
+    <div class="header">
+        <div class="header-content">
+            <div class="brand">
+                <img src="logo_lol.png" class="logo" alt="Logo">
+                <h1 class="app-title">Campeones</h1>
+            </div>
+
+            <div class="search-box">
+                <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar campeón..." class="search-input">
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid-container">
+        @if(isLoading){
+        <div class="loading-msg">
+            <p>Cargando campeones...</p>
+        </div>
+        }
+
+        <div class="champions-grid">
+            @for(champ of filteredChampions(); track champ.id){
+            <div routerLink="/champions/{{champ.id}}" class="champion-card">
+
+                <!-- Image Container -->
+                <div class="card-image-wrapper">
+                    <img [src]="champ.imagen" [alt]="champ.nombre" class="card-img">
+                </div>
+
+                <!-- Name Overlay -->
+                <div class="card-overlay">
+                    <h3 class="card-name">{{ champ.nombre }}</h3>
+                </div>
+            </div>
+            }
+        </div>
+
+        <!-- No results -->
+        @if(!isLoading && filteredChampions().length === 0){
+        <div class="no-results">
+            <p>No se encontraron campeones con ese nombre.</p>
+        </div>
+        }
+    </div>
+</div>

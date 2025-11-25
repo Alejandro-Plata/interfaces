@@ -1,0 +1,216 @@
+:host {
+    display: block;
+}
+
+/* Main Container */
+.list-container {
+    min-height: 100vh;
+    background-color: #111827;
+    /* gray-900 */
+    color: #f3f4f6;
+    font-family: sans-serif;
+    padding-bottom: 2.5rem;
+}
+
+/* Header */
+.header {
+    background-color: #1f2937;
+    /* gray-800 */
+    border-bottom: 1px solid #374151;
+    /* gray-700 */
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .header-content {
+        flex-direction: row;
+    }
+}
+
+/* Brand */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.app-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    color: #eab308;
+    /* yellow-500 */
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Search */
+.search-box {
+    position: relative;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .search-box {
+        width: 33%;
+    }
+}
+
+.search-input {
+    width: 100%;
+    background-color: #111827;
+    color: white;
+    border: 1px solid #4b5563;
+    border-radius: 9999px;
+    padding: 0.5rem 1.25rem 0.5rem 2.5rem;
+    outline: none;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    /* Important for width: 100% */
+}
+
+.search-input:focus {
+    border-color: #eab308;
+    box-shadow: 0 0 0 1px #eab308;
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.5rem;
+    color: #6b7280;
+}
+
+/* Grid Layout */
+.grid-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.champions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .champions-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .champions-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .champions-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .champions-grid {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+/* Cards */
+.champion-card {
+    position: relative;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+}
+
+.champion-card:hover {
+    border-color: #eab308;
+    transform: translateY(-0.25rem);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+}
+
+.card-image-wrapper {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: #111827;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: transform 0.5s ease-in-out, opacity 0.5s;
+}
+
+.champion-card:hover .card-img {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, #111827, rgba(17, 24, 39, 0.9), transparent);
+    padding: 1.5rem 0.75rem 0.75rem;
+}
+
+.card-name {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.125rem;
+    color: #e5e7eb;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    margin: 0;
+    transition: color 0.3s;
+}
+
+.champion-card:hover .card-name {
+    color: #facc15;
+    /* yellow-400 */
+}
+
+.loading-msg {
+    text-align: center;
+    padding: 5rem 0;
+    color: #eab308;
+}
+
+.no-results {
+    text-align: center;
+    padding: 5rem 0;
+    color: #6b7280;
+    font-size: 1.25rem;
+}

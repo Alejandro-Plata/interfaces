@@ -1,0 +1,54 @@
+<div class="champion-detail-container">
+
+    <!-- Si está cargando, renderiza el spinner-->
+    @if (isLoading) {
+    <div class="loading-container">
+        <div class="spinner"></div>
+    </div>
+    }
+
+    <!-- Lo renderiza si existe el campeón -->
+    @if (champion) {
+    <div class="content-wrapper">
+
+        <!-- Splash Art -->
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <img [src]="champion.splash" class="hero-image" alt="Splash Art">
+        </div>
+
+
+
+        <!-- Vuelta a la ruta de campeones -->
+        <div class="detail-content">
+
+            <button routerLink="/champions" class="back-button">
+                ← Volver al listado
+            </button>
+
+            <div class="info-grid">
+                <!-- Avatar y título -->
+                <div class="header-section">
+                    <img [src]="champion.imagen" class="avatar" [alt]="champion.nombre">
+
+                    <h1 class="champion-name">{{ champion.nombre }}</h1>
+                    <h2 class="champion-title">{{ champion.title }}</h2>
+
+                    <div class="tags-container">
+                        <!-- Por si tiene más de un tag -->
+                        @for (role of champion.tags; track $index) {
+                        <span class="tag">{{ role }}</span>
+                        }
+                    </div>
+                </div>
+
+                <!-- Lore -->
+                <div class="lore-section">
+                    <h3 class="lore-header">Lore</h3>
+                    <p class="lore-text">{{ champion.lore }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
