@@ -30,7 +30,7 @@
 
         <div class="champions-grid">
             @for(champ of filteredChampions(); track champ.id){
-            <div routerLink="/champions/{{champ.id}}" class="champion-card">
+            <div routerLink="/{{champ.id}}" class="champion-card">
 
                 <!-- Image Container -->
                 <div class="card-image-wrapper">

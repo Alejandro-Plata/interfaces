@@ -4,6 +4,6 @@ import { ChampionDetailComponent } from './champion-detail-component/champion-de
 
 export const routes: Routes = [
     { path: '', component: ChampionListComponent }, // Ruta por defecto
-    { path: 'champions/:id', component: ChampionDetailComponent }, // Ruta para ver el detalle de un campeón (usando param id)
+    { path: ':id', component: ChampionDetailComponent }, // Ruta para ver el detalle de un campeón (usando param id)
     { path: '**', component: ChampionListComponent } // Ruta comodín para URLs no encontradas
 ];
