@@ -3,24 +3,22 @@
   <h1 class="title">Contacto</h1>
 
   <form [formGroup]="contactForm" (ngSubmit)="sendMail()" class="form">
-    <input 
-      type="text" 
-      placeholder="Nombre" 
-      formControlName="name"
-    />
-
-    <input 
-      type="text" 
-      placeholder="Asunto" 
-      formControlName="subject"
-    />
-
-    <textarea 
-      rows="5" 
-      placeholder="Mensaje" 
-      formControlName="message">
+    <input type="text" placeholder="Nombre" formControlName="name" />
+    @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
+    <div class="error">El nombre es obligatorio.</div>
+    }
+    <input type="email" placeholder="Email" formControlName="email" />
+    @if (contactForm.get('email')?.required && contactForm.get('email')?.touched) {
+    <div class="error">El email es obligatorio.</div>
+    }
+    @if (contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched) {
+    <div class="error">El formato del email es incorrecto.</div>
+    }
+    <textarea rows="5" placeholder="Mensaje" formControlName="message">
     </textarea>
-
+    @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
+    <div class="error">El mensaje es no puede estar vacío.</div>
+    }
     <button type="submit" [disabled]="contactForm.invalid">
       ¡CONTÁCTAME!
     </button>
