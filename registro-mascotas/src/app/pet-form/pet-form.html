@@ -9,7 +9,8 @@
         <!-- Campo: Nombre -->
         <div class="mb-4">
             <label for="name" class="form-label">Nombre</label>
-            <input id="name" type="text" formControlName="name" placeholder="Ej: Max" class="form-input" />
+            <input id="name" type="text" formControlName="name" placeholder="Ej: Max" class="form-input"
+                [class.is-invalid]="petForm.controls.name.invalid && petForm.controls.name.touched" />
 
             <!-- Mensajes de Validación -->
             @if (petForm.controls.name.invalid && petForm.controls.name.touched) {
@@ -22,7 +23,8 @@
         <!-- Campo: Tipo (Select) -->
         <div class="mb-4">
             <label for="type" class="form-label">Tipo</label>
-            <select id="type" formControlName="type" class="form-input">
+            <select id="type" formControlName="type" class="form-input"
+                [class.is-invalid]="petForm.controls.type.invalid && petForm.controls.type.touched">
                 <option value="">-- Seleccionar Tipo --</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -42,32 +44,26 @@
         <div class="mb-4">
             <label for="age" class="form-label">Edad (años)</label>
             <input id="age" type="number" formControlName="age" placeholder="Edad" min="0"
-                class="form-input appearance-none" />
+                class="form-input appearance-none"
+                [class.is-invalid]="petForm.controls.age.invalid && petForm.controls.age.touched" />
 
             <!-- Mensajes de Validación -->
             @if (petForm.controls.age.invalid && petForm.controls.age.touched) {
             <p class="error-message">
-                @if (petForm.controls.age.errors?.['required']) {
+                <!-- La lógica @if interna ya no es necesaria aquí, se maneja en getErrorMessage -->
                 {{ getErrorMessage('age') }}
-                } @else if (petForm.controls.age.errors?.['min']) {
-                {{ getErrorMessage('age') }}
-                }
             </p>
             }
         </div>
 
         <!-- Campo: ¿Tiene Chip? (Checkbox) -->
         <div class="mb-6 flex items-center">
+            <!-- Nota: Los estilos de checkbox no se tradujeron a CSS puro, se mantienen los de sistema. -->
             <input id="hasChip" type="checkbox" formControlName="hasChip"
                 class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
             <label for="hasChip" class="ml-2 block text-sm text-gray-900">
                 ¿Tiene Chip?
             </label>
-            @if (petForm.controls.hasChip.invalid && petForm.controls.hasChip.touched) {
-            <p class="error-message">
-                {{ getErrorMessage('hasChip') }}
-            </p>
-            }
         </div>
 
         <!-- Botón de Envío -->

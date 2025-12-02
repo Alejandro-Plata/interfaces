@@ -15,12 +15,14 @@ export class App {
   // Creamos una lista con las mascotas de mascotas
   pets: Pet[] = [];
 
-  // Recibimos el evento
-  @Input()
+  // Emitimos el evento
+  @Output()
   petToTheList = new EventEmitter<Pet>();
 
+  // Recibimos el evento
   whenPetRegistered(pet: Pet) {
     this.pets.push(pet);
+    this.petToTheList.emit(pet);
   }
 
 }

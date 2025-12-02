@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Pet } from '../shared/pet';
 
 @Component({
@@ -7,26 +7,14 @@ import { Pet } from '../shared/pet';
   templateUrl: './pet-list.html',
   styleUrl: './pet-list.css',
 })
-export class PetList implements OnInit {
+export class PetList {
 
-  // Creamos una lista con las mascotas de mascotas
-  pets: Pet[] = [];
-
-  // Recibimos el evento
+  // Recibimos la lista de mascotas del componente padre
   @Input()
-  petCreated = new EventEmitter<Pet>();
-
-  // Añadimos la mascota a la lista
-  ngOnInit(): void {
-    this.petCreated.subscribe(pet => {
-      // Añadimos un id a la mascota
-      pet.id = this.pets.length + 1;
-      this.pets.push(pet);
-    });
-  }
+  petsList: Pet[] = [];
 
   getPets(): Pet[] {
-    return this.pets;
+    return this.petsList;
   }
 
 }

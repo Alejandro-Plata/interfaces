@@ -1,11 +1,9 @@
 <div class="app-container">
   <div class="main-content">
 
-    <!-- El Padre escucha el evento "petRegistered" del Hermano A (PetFormComponent) -->
-    <app-pet-form (petRegistered)="whenPetRegistered($event)" />
+    <app-pet-form (petCreated)="whenPetRegistered($event)" />
 
-    <!-- El Padre pasa la lista actualizada por "pets" al Hermano B (PetListComponent) -->
-    <app-pet-list [pets]="pets" />
+    <app-pet-list [petsList]="pets" />
 
   </div>
 </div>
