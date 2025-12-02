@@ -1,36 +1,32 @@
-<div class="panel">
-    <h2 class="section-title">
+<div class="pet-list-panel">
+    <h2 class="pet-list-panel__title">
         Listado de Mascotas ({{ getPets().length }})
     </h2>
-
-    @if (getPets().length === 0) {
-    <p class="text-gray-500 italic">Aún no hay mascotas registradas.</p>
-    } @else {
-    <!-- Grid de Tarjetas de Mascotas -->
+    
     <div class="pet-grid">
         @for (pet of getPets(); track pet.id) {
         <div class="pet-card">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h3 class="pet-name">{{ pet.name }}</h3>
-                    <p class="pet-type">{{ pet.type }}</p>
+            <div class="pet-card__header">
+                <div class="pet-card__details">
+                    <h3 class="pet-card__name">{{ pet.name }}</h3>
+                    <p class="pet-card__type">{{ pet.type }}</p>
                 </div>
-                <!-- Indicador de Chip -->
+                
                 @if (pet.hasChip) {
-                <span class="chip-status chip-ok">
-                    Chip OK
+                <span class="pet-card__chip-status pet-card__chip-status--ok">
+                    Chip
                 </span>
                 } @else {
-                <span class="chip-status chip-missing">
+                <span class="pet-card__chip-status pet-card__chip-status--missing">
                     Sin Chip
                 </span>
                 }
             </div>
-            <div class="">
-                Edad: <span class="font-bold">{{ pet.age }}</span> años
+            
+            <div class="pet-card__age-info">
+                Edad: <span class="pet-card__age">{{ pet.age }}</span> años
             </div>
         </div>
         }
     </div>
-    }
-</div>
+    </div>

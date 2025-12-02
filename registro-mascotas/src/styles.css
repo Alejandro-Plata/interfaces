@@ -1,45 +1,61 @@
-/* Estilos para el contenedor principal de la aplicación: min-h-screen bg-gray-50 p-4 sm:p-10 */
-.app-container {
+/* =========================================
+   VARIABLES
+   ========================================= */
+:root {
+    --earth-dark: #2c3e50;
+    --nature-green: #2a9d8f;
+    --warm-clay: #e76f51;
+    --sand-bg: #fdfbf7;
+    --card-bg: #ffffff;
+    --soft-leaf: #d8f3dc;
+    --soft-clay: #ffedea;
+    --radius-sharp: 0px;
+    --shadow-soft: 0 4px 20px rgba(44, 62, 80, 0.08);
+    --shadow-hover: 0 15px 30px rgba(44, 62, 80, 0.15);
+    --font-serif: 'Georgia', 'Times New Roman', serif;
+    --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* =========================================
+   GLOBAL
+   ========================================= */
+body {
+    background-color: var(--sand-bg);
+    color: var(--earth-dark);
+    font-family: var(--font-sans);
+    margin: 0;
     min-height: 100vh;
-    background-color: #f9fafb;
-    /* gray-50 */
-    padding: 1rem;
-    /* p-4 */
+    padding: 40px 20px;
+    line-height: 1.5;
 }
 
-/* Contenedor central: max-w-4xl mx-auto space-y-8 */
+h1, h2, h3, .section-title, .pet-list-panel__title {
+    font-family: var(--font-serif);
+    font-weight: normal;
+    color: var(--earth-dark);
+    margin-top: 0;
+}
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .main-content {
-    max-width: 56rem;
-    /* max-w-4xl */
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    /* space-y-8 */
-    margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 50px;
+    width: 100%;
 }
 
-/* Estilos de las tarjetas/paneles: p-6 bg-white shadow-xl rounded-lg border border-gray-100 */
-.panel {
-    padding: 1.5rem;
-    /* p-6 */
-    background-color: #ffffff;
-    /* bg-white */
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    /* shadow-xl */
-    border-radius: 0.5rem;
-    /* rounded-lg */
-    border: 1px solid #f3f4f6;
-    /* border border-gray-100 */
+@media (min-width: 900px) {
+    .main-content {
+        grid-template-columns: 320px 1fr;
+        align-items: start;
+    }
 }
 
-/* Título de sección: text-2xl font-bold mb-6 text-gray-800 */
-.section-title {
-    font-size: 1.5rem;
-    /* text-2xl */
-    font-weight: 700;
-    /* font-bold */
-    margin-bottom: 1.5rem;
-    /* mb-6 */
-    color: #1f2937;
-    /* text-gray-800 */
-}
+
+

@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Pet } from '../shared/pet';
 
@@ -26,6 +26,24 @@ export class PetForm {
     age: ['', [Validators.required, Validators.min(0)]],
     hasChip: [false],
   });
+
+  // Getters y setters
+  
+  get name(): AbstractControl | null {
+        return this.petForm.get('name');
+    }
+
+    get type(): AbstractControl | null {
+        return this.petForm.get('type');
+    }
+
+    get age(): AbstractControl | null {
+        return this.petForm.get('age');
+    }
+
+    get hasChip(): AbstractControl | null {
+        return this.petForm.get('hasChip');
+    }
 
 
   // Si el formulario es válido, emitimos el evento con los valores de la mascota

@@ -7,13 +7,11 @@
     <form [formGroup]="petForm" (ngSubmit)="onSubmit()">
 
         <!-- Campo: Nombre -->
-        <div class="mb-4">
+        <div>
             <label for="name" class="form-label">Nombre</label>
-            <input id="name" type="text" formControlName="name" placeholder="Ej: Max" class="form-input"
-                [class.is-invalid]="petForm.controls.name.invalid && petForm.controls.name.touched" />
+            <input id="name" type="text" formControlName="name" placeholder="Ej: Max" class="form-input" />
 
-            <!-- Mensajes de Validación -->
-            @if (petForm.controls.name.invalid && petForm.controls.name.touched) {
+           @if (name?.invalid && (name?.touched || name?.dirty)) {
             <p class="error-message">
                 {{ getErrorMessage('name') }}
             </p>
@@ -21,10 +19,9 @@
         </div>
 
         <!-- Campo: Tipo (Select) -->
-        <div class="mb-4">
+        <div>
             <label for="type" class="form-label">Tipo</label>
-            <select id="type" formControlName="type" class="form-input"
-                [class.is-invalid]="petForm.controls.type.invalid && petForm.controls.type.touched">
+            <select id="type" formControlName="type" class="form-input">
                 <option value="">-- Seleccionar Tipo --</option>
                 <option value="Perro">Perro</option>
                 <option value="Gato">Gato</option>
@@ -32,8 +29,7 @@
                 <option value="Otro">Otro</option>
             </select>
 
-            <!-- Mensaje de Validación -->
-            @if (petForm.controls.type.invalid && petForm.controls.type.touched) {
+            @if (type?.invalid && (type?.touched || type?.dirty)) {
             <p class="error-message">
                 {{ getErrorMessage('type') }}
             </p>
@@ -41,28 +37,25 @@
         </div>
 
         <!-- Campo: Edad -->
-        <div class="mb-4">
+        <div>
             <label for="age" class="form-label">Edad (años)</label>
             <input id="age" type="number" formControlName="age" placeholder="Edad" min="0"
-                class="form-input appearance-none"
-                [class.is-invalid]="petForm.controls.age.invalid && petForm.controls.age.touched" />
+                class="form-input appearance-none" />
 
             <!-- Mensajes de Validación -->
-            @if (petForm.controls.age.invalid && petForm.controls.age.touched) {
+            @if (age?.invalid && (age?.touched || age?.dirty)) {
             <p class="error-message">
-                <!-- La lógica @if interna ya no es necesaria aquí, se maneja en getErrorMessage -->
                 {{ getErrorMessage('age') }}
             </p>
             }
         </div>
 
         <!-- Campo: ¿Tiene Chip? (Checkbox) -->
-        <div class="mb-6 flex items-center">
+        <div>
             <!-- Nota: Los estilos de checkbox no se tradujeron a CSS puro, se mantienen los de sistema. -->
-            <input id="hasChip" type="checkbox" formControlName="hasChip"
-                class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-            <label for="hasChip" class="ml-2 block text-sm text-gray-900">
-                ¿Tiene Chip?
+            <input id="hasChip" type="checkbox" formControlName="hasChip" />
+            <label for="hasChip">
+                Tiene chip
             </label>
         </div>
 
