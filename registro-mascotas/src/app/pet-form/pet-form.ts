@@ -28,22 +28,22 @@ export class PetForm {
   });
 
   // Getters y setters
-  
+
   get name(): AbstractControl | null {
-        return this.petForm.get('name');
-    }
+    return this.petForm.get('name');
+  }
 
-    get type(): AbstractControl | null {
-        return this.petForm.get('type');
-    }
+  get type(): AbstractControl | null {
+    return this.petForm.get('type');
+  }
 
-    get age(): AbstractControl | null {
-        return this.petForm.get('age');
-    }
+  get age(): AbstractControl | null {
+    return this.petForm.get('age');
+  }
 
-    get hasChip(): AbstractControl | null {
-        return this.petForm.get('hasChip');
-    }
+  get hasChip(): AbstractControl | null {
+    return this.petForm.get('hasChip');
+  }
 
 
   // Si el formulario es válido, emitimos el evento con los valores de la mascota
