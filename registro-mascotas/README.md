@@ -1,59 +1,66 @@
-# RegistroMascotas
+# 🐾 Patitas & Co. - Registro de Mascotas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.10.
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-## Development server
+Una aplicación web moderna y elegante construida con **Angular** para la gestión y registro de mascotas. 
 
-To start a local development server, run:
+![Vista Previa de la Aplicación](./screenshot.png)
 
-```bash
-ng serve
-```
+## ✨ Características Principales
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 🛠 Funcionalidades Técnicas
+- **Formularios Reactivos (Reactive Forms):** Implementación robusta con `FormBuilder`.
+- **Validaciones Personalizadas:**
+  - Validaciones estándar (Requerido, Mínimos).
+  - **Validador Custom:** `unknownNameValidator` para evitar nombres genéricos como "Desconocido".
+  - Feedback visual inmediato (bordes y sombras rojas) en campos inválidos `touched` o `dirty`.
+- **Comunicación entre Componentes:**
+  - Uso de `@Input` y `@Output` para la gestión de datos entre Padre e Hijo.
+  - Emisión de eventos para registro y eliminación de items.
+- **Sintaxis Moderna de Angular:** Uso de los nuevos bloques de control de flujo (`@if`, `@for`).
+- **Feedback al Usuario:** Notificaciones tipo "Toast" animadas al completar acciones exitosas.
 
-## Code scaffolding
+### 🎨 Diseño y UI/UX
+- **Diseño "Earth Tones":** Paleta de colores cálida y natural (Arcilla, Verde Naturaleza, Arena).
+- **Fondo Texturizado:** Patrón de puntos (Dot Grid) generado con CSS puro.
+- **Micro-interacciones:** Animaciones suaves en botones y tarjetas al hacer hover.
+- **Diseño Responsivo:** Adaptable a dispositivos móviles y escritorio mediante CSS Grid.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Instalación y Uso
 
-```bash
-ng generate component component-name
-```
+Sigue estos pasos para ejecutar el proyecto en tu entorno local:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/Alejandro-Plata/interfaces.git](https://github.com/Alejandro-Plata/interfaces.git)
+    cd interfaces/registro-mascotas
+    ```
 
-```bash
-ng generate --help
-```
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
 
-## Building
+3.  **Ejecutar el servidor de desarrollo:**
+    ```bash
+    ng serve
+    ```
 
-To build the project run:
+4.  **Abrir en el navegador:**
+    Navega a `http://localhost:4200/`.
 
-```bash
-ng build
-```
+## 📂 Estructura del Proyecto
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+El proyecto sigue una arquitectura limpia basada en componentes:
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```text
+src/
+├── app/
+│   ├── pet-form/           # Componente del formulario reactivo
+│   ├── pet-list/           # Componente para visualizar las tarjetas
+│   ├── shared/             # Interfaces (Pet.ts)
+│   ├── validaciones/       # Validadores personalizados
+│   └── app.component.ts    # Componente principal (Lógica de negocio)
+└── styles.css              # Variables CSS globales y estilos base
