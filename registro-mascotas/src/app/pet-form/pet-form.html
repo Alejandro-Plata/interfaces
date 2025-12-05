@@ -11,7 +11,7 @@
             <label for="name" class="form-label">Nombre</label>
             <input id="name" type="text" formControlName="name" placeholder="Ej: Max" class="form-input" />
 
-           @if (name?.invalid && (name?.touched || name?.dirty)) {
+            @if (name?.invalid && (name?.touched || name?.dirty)) {
             <p class="error-message">
                 {{ getErrorMessage('name') }}
             </p>
@@ -52,7 +52,6 @@
 
         <!-- Campo: ¿Tiene Chip? (Checkbox) -->
         <div>
-            <!-- Nota: Los estilos de checkbox no se tradujeron a CSS puro, se mantienen los de sistema. -->
             <input id="hasChip" type="checkbox" formControlName="hasChip" />
             <label for="hasChip">
                 Tiene chip
@@ -66,3 +65,17 @@
 
     </form>
 </div>
+<!-- En caso de que el formulario haga un registro exitoso, se muestra este toast indicando que ha salido todo bien -->
+@if (showSuccessToast) {
+<div class="toast-notification">
+    <div class="toast-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+    </div>
+    <div class="toast-content">
+        <span class="toast-title">¡Registro Exitoso!</span>
+        <span class="toast-message">La mascota se ha guardado correctamente.</span>
+    </div>
+</div>
+}

@@ -1,9 +1,11 @@
-<div class="app-container">
+<main class="app-container">
+  <header class="app-header">
+    <h1 class="brand-title">Patitas & Co.</h1>
+    <p class="brand-subtitle">Gestiona a tus compañeros de vida en un solo lugar.</p>
+  </header>
+
   <div class="main-content">
-
     <app-pet-form (petCreated)="whenPetRegistered($event)" />
-
-    <app-pet-list [petsList]="pets" />
-
+    <app-pet-list [petsList]="pets" (petDeleted)="whenPetDeleted($event)" />
   </div>
-</div>
+</main>

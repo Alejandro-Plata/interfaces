@@ -6,7 +6,7 @@ import { Pet } from './shared/pet';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PetForm, PetList],
+  imports: [PetForm, PetList],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -19,10 +19,15 @@ export class App {
   @Output()
   petToTheList = new EventEmitter<Pet>();
 
-  // Recibimos el evento
+  // Recibimos el evento de mascota registrada
   whenPetRegistered(pet: Pet) {
     this.pets.push(pet);
     this.petToTheList.emit(pet);
+  }
+
+  whenPetDeleted(petToDelete: Pet) {
+    // Filtra las mascotas y elimina la que hemos emitido desde el pet-list
+    this.pets = this.pets.filter(pet => pet !== petToDelete);
   }
 
 }

@@ -25,11 +25,66 @@ body {
     font-family: var(--font-sans);
     margin: 0;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 20px;
+    background-image: radial-gradient(var(--earth-dark) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-blend-mode: multiply;
+    opacity: 1;
     line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: hidden;
 }
 
-h1, h2, h3, .section-title, .pet-list-panel__title {
+body {
+    /* Reemplaza la regla anterior con esta más específica para opacidad */
+    background-color: var(--sand-bg);
+    background-image: radial-gradient(rgba(44, 62, 80, 0.15) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+}
+
+.app-header {
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 40px;
+    position: relative;
+}
+
+.brand-title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    color: var(--earth-dark);
+    margin: 0;
+    font-weight: bold;
+    letter-spacing: -1px;
+    text-shadow: 2px 2px 0px rgba(42, 157, 143, 0.2);
+}
+
+.brand-subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--nature-green);
+    margin-top: 10px;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+
+
+.main-content {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h1,
+h2,
+h3,
+.section-title,
+.pet-list-panel__title {
     font-family: var(--font-serif);
     font-weight: normal;
     color: var(--earth-dark);
@@ -38,9 +93,11 @@ h1, h2, h3, .section-title, .pet-list-panel__title {
 
 .app-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    height: 100dvh;
     max-width: 1200px;
-    margin: 0 auto;
 }
 
 .main-content {
@@ -56,6 +113,3 @@ h1, h2, h3, .section-title, .pet-list-panel__title {
         align-items: start;
     }
 }
-
-
-

@@ -6,7 +6,7 @@
     padding: 30px;
     border-radius: var(--radius-sharp);
     box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(0,0,0,0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .section-title {
@@ -26,7 +26,7 @@
     opacity: 0.8;
 }
 
-form > div {
+form>div {
     margin-bottom: 25px;
 }
 
@@ -39,7 +39,8 @@ form > div {
     font-weight: 700;
 }
 
-.form-input, select.form-input {
+.form-input,
+select.form-input {
     width: 100%;
     padding: 8px 12px;
     background-color: #f4f6f8;
@@ -53,7 +54,8 @@ form > div {
 
 /* Ajuste específico para input numérico */
 input[type="number"].form-input {
-    padding-right: 15px; /* Espacio extra para las flechas */
+    padding-right: 15px;
+    /* Espacio extra para las flechas */
 }
 
 .form-input:focus {
@@ -109,7 +111,8 @@ input[type="checkbox"] {
 
 /* Error limpio y nítido (sin cajas) */
 .error-message {
-    color: #b91c1c; /* Rojo oscuro nítido */
+    color: #b91c1c;
+    /* Rojo oscuro nítido */
     font-size: 0.7rem;
     font-weight: 700;
     margin-top: 6px;
@@ -118,4 +121,102 @@ input[type="checkbox"] {
     border-left: 2px solid #b91c1c;
     padding-left: 8px;
     background: transparent;
+}
+
+/* Estado Inválido: */
+
+.form-input.ng-invalid.ng-touched,
+.form-input.ng-invalid.ng-dirty {
+    /* Cambiamos el borde a rojo */
+    border-color: #b91c1c;
+
+    /* AÑADIMOS LA SOMBRA ROJA SOLICITADA */
+    /* Usamos rgba para que la sombra sea translúcida y suave */
+    box-shadow: 0 0 8px rgba(185, 28, 28, 0.5);
+}
+
+/*
+
+Estado Inválido con Foco:
+Si un campo es inválido y el usuario hace clic en él para corregirlo,
+se pondrá en verde.
+
+*/
+
+.form-input.ng-invalid.ng-touched:focus,
+.form-input.ng-invalid.ng-dirty:focus {
+    border-color: #b91c1c;
+
+    /* IMPORTANTE: Anulamos la sombra interna verde de tu CSS original */
+    box-shadow: none;
+
+    /* Añadimos una sombra roja externa estilo "anillo de foco" */
+    box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.3);
+}
+
+/* =========================================
+   TOAST NOTIFICATION (Mensaje Flotante)
+   ========================================= */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--earth-dark);
+    /* Fondo oscuro para contraste elegante */
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-left: 5px solid var(--nature-green);
+    /* Acento de éxito */
+    z-index: 1000;
+
+    /* Animación de entrada */
+    animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+    /* Mantener estilo cuadrado/sharp del resto de la web */
+    border-radius: var(--radius-sharp);
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: var(--nature-green);
+}
+
+.toast-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.toast-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.toast-message {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    font-family: var(--font-sans);
+}
+
+/* Animación Keyframes */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

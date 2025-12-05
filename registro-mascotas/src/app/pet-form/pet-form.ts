@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Pet } from '../shared/pet';
+import { unknownNameValidator } from '../validaciones/unknownNameValidator'
 
 @Component({
   selector: 'app-pet-form',
@@ -21,11 +22,14 @@ export class PetForm {
 
   // Definimos las validaciones del formulario
   petForm = this.fb.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
+    name: ['', [Validators.required, Validators.minLength(2), unknownNameValidator]], // Validación personalizada para que el nombre no sea desconocido
     type: ['', Validators.required],
     age: ['', [Validators.required, Validators.min(0)]],
     hasChip: [false],
   });
+
+  // Variable para controlar el toast
+  showSuccessToast = false;
 
   // Getters y setters
 
@@ -50,15 +54,17 @@ export class PetForm {
   onSubmit() {
     if (this.petForm.valid) {
 
-      const values = this.petForm.getRawValue();
+      const values = this.petForm.getRawValue(); // Extraemos los valores para poder pasar la edad a number
 
       this.petCreated.emit({
         name: values.name,
         type: values.type,
-        age: +values.age,
+        age: +values.age, // Con el operador unitario convertimos la edad a number
         hasChip: values.hasChip,
-        id: 0 // Placeholder
       });
+
+      // Mostramos el toast cuando el formulario es válido
+      this.triggerToast();
 
       this.petForm.reset(); // Reseteamos el formulario al finalizar
     }
@@ -76,7 +82,18 @@ export class PetForm {
       return `Mínimo ${requiredLength} caracteres`;
     }
 
+    if (control?.hasError('unknownName')) return 'El nombre no puede ser "desconocido"';
+
     return '';
+  }
+
+  // Muestra el toast y lo oculta después de 3 segundos
+  triggerToast() {
+    this.showSuccessToast = true;
+
+    setTimeout(() => {
+      this.showSuccessToast = false;
+    }, 3000);
   }
 
 }

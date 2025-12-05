@@ -2,31 +2,38 @@
     <h2 class="pet-list-panel__title">
         Listado de Mascotas ({{ getPets().length }})
     </h2>
-    
+
     <div class="pet-grid">
-        @for (pet of getPets(); track pet.id) {
+        @for (pet of getPets(); track $index) {
         <div class="pet-card">
             <div class="pet-card__header">
                 <div class="pet-card__details">
                     <h3 class="pet-card__name">{{ pet.name }}</h3>
                     <p class="pet-card__type">{{ pet.type }}</p>
                 </div>
-                
+
                 @if (pet.hasChip) {
-                <span class="pet-card__chip-status pet-card__chip-status--ok">
-                    Chip
-                </span>
+                <span class="pet-card__chip-status pet-card__chip-status--ok">Chip</span>
                 } @else {
-                <span class="pet-card__chip-status pet-card__chip-status--missing">
-                    Sin Chip
-                </span>
+                <span class="pet-card__chip-status pet-card__chip-status--missing">Sin Chip</span>
                 }
             </div>
-            
-            <div class="pet-card__age-info">
-                Edad: <span class="pet-card__age">{{ pet.age }}</span> años
+
+            <div class="pet-card__footer">
+                <div class="pet-card__age-info">
+                    Edad: <span class="pet-card__age">{{ pet.age }}</span> años
+                </div>
+
+                <button class="btn-delete" (click)="onDelete(pet)" title="Eliminar mascota">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18"></path>
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                    </svg>
+                </button>
             </div>
         </div>
         }
     </div>
-    </div>
+</div>
