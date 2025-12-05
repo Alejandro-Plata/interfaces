@@ -6,7 +6,7 @@
 
 Una aplicación web moderna y elegante construida con **Angular** para la gestión y registro de mascotas. 
 
-![Vista Previa de la Aplicación](./screenshot.png)
+![Vista Previa de la Aplicación](./public/screenshot.png)
 
 ## ✨ Características Principales
 
