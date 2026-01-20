@@ -55,6 +55,8 @@ export class TaskService {
         stock INTEGER DEFAULT 0,
         category_id INTEGER,
         FOREIGN KEY (category_id) REFERENCES categories(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
       );`;
 
         const sqlCreateTableCategories = `
@@ -108,6 +110,7 @@ export class TaskService {
             category_name: t.category_name
         }));
     }
+
     async addItem(name: string, stock: number, category_id: number) {
         const sql = 'INSERT INTO items (name, stock, category_id) VALUES (?, ?, ?)';
         await this.db.run(sql, [name, stock, category_id]);
@@ -117,6 +120,12 @@ export class TaskService {
     async addCategory(name: string) {
         const sql = 'INSERT INTO categories (name) VALUES (?)';
         await this.db.run(sql, [name]);
+        await this.saveAndRefresh();
+    }
+
+    async deleteCategory(id: number) {
+        const sql = 'DELETE FROM categories WHERE id = ?';
+        await this.db.run(sql, [id]);
         await this.saveAndRefresh();
     }
 

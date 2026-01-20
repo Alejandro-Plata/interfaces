@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva categoría</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-input label="Nombre de la nueva categoría" labelPlacement="floating" placeholder="Ej. Ropa"
+    [(ngModel)]="newCategoryName">
+  </ion-input>
+
+  <div class="ion-padding-top">
+    <ion-button expand="block" (click)="confirm()" [disabled]="!newCategoryName">
+      Añadir
+    </ion-button>
+  </div>
+
+</ion-content>

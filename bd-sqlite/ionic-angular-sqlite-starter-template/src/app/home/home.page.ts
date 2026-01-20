@@ -6,16 +6,19 @@ import { TaskService } from '../services/task.service';
 import { Item } from '../models/item';
 import { ModalComponent } from '../modal/modal.component';
 import { Category } from '../models/category';
+import { ModalNewCategorieComponent } from '../modal-new-categorie/modal-new-categorie.component';
+import { CategoriesComponent } from "../categories/categories.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [CommonModule, IonicModule, FormsModule],
+  imports: [CommonModule, IonicModule, FormsModule, ModalNewCategorieComponent, CategoriesComponent],
   standalone: true
 })
 export class HomePage implements OnInit {
 
+  selectedTag = 'inventario';
   categories: Category[] = [];
 
   constructor(public taskService: TaskService, public modalController: ModalController) { }
@@ -66,6 +69,21 @@ export class HomePage implements OnInit {
     const { data, role } = await modal.onDidDismiss();
     if (role === 'confirm' && data) {
       this.addItem(data.name, data.stock, data.category_name);
+    }
+  }
+
+  async addCategory() {
+    const modal = await this.modalController.create({
+      component: ModalNewCategorieComponent,
+      componentProps: {
+        categories: this.categories
+      }
+    });
+    modal.present();
+
+    const { data, role } = await modal.onDidDismiss();
+    if (role === 'confirm' && data) {
+      await this.taskService.addCategory(data.name);
     }
   }
 }
