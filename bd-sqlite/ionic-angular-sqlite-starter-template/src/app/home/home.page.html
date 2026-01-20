@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Inventario</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar placeholder="Buscar producto..." (ionInput)="taskService.searchItems($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of taskService.items">
+      <ion-item>
+        <ion-label>
+          <h2>{{ item.name }}</h2>
+          <p>{{ item.category_name }}</p>
+        </ion-label>
+
+        <ion-buttons slot="end">
+          <ion-button color="medium" (click)="decreaseStock(item)">
+            <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+          </ion-button>
+
+          <ion-label class="ion-padding-horizontal">
+            <ng-container *ngIf="item.stock < 3">
+              <ion-text color="danger">
+                <strong>{{ item.stock }}</strong>
+              </ion-text>
+            </ng-container>
+            <ng-container *ngIf="item.stock >= 3">
+              <strong>{{ item.stock }}</strong>
+            </ng-container>
+          </ion-label>
+
+          <ion-button color="success" (click)="increaseStock(item)">
+            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="openModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar>
+    <ion-tab-button tab="inventario" selected>
+      <ion-icon name="list"></ion-icon>
+      <ion-label>Inventario</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="categorias">
+      <ion-icon name="grid"></ion-icon>
+      <ion-label>Categorías</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
