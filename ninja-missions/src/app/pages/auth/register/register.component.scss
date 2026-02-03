@@ -1,0 +1,38 @@
+:host {
+  --background: #0a110d; // Color de fondo base para Ionic
+}
+
+ion-content {
+
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+}
+
+.parchment-bg {
+  background-color: #1c271f;
+  background-image: linear-gradient(rgba(28, 39, 31, 0.95), rgba(28, 39, 31, 0.95)), 
+                    url('https://www.transparenttextures.com/patterns/dark-leather.png'); // Sustituto para textura
+}
+
+.shuriken-pattern {
+  background-image: radial-gradient(#11d452 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  opacity: 0.05;
+}
+
+// Estilo para el icono del select
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2311d452'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-position: right 1rem center;
+  background-repeat: no-repeat;
+  background-size: 1.2em;
+}
+
+// Asegurar que el contenido ocupe toda la pantalla en Ionic
+ion-content {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}

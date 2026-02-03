@@ -1,0 +1,90 @@
+:host {
+  --rank-s: #ff4d4d; // Rojo
+  --rank-a: #b366ff; // Morado
+  --rank-b: #ff9933; // Naranja
+  --rank-c: #3399ff; // Azul
+  --rank-d: #94a3b8; // Gris
+}
+
+// Fondo general oscuro para que resalte el neón
+ion-content {
+  --background: #0a110d; 
+}
+
+// --- ESTILOS DE LAS TARJETAS ---
+
+.mission-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.03); // Fondo muy sutil
+  backdrop-filter: blur(10px); // Efecto cristal
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  
+  // Transición suave al pasar el mouse
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px rgba(17, 212, 82, 0.1); // Brillo verde sutil
+  }
+}
+
+// --- CLASES DINÁMICAS POR RANGO (IMPORTANTE) ---
+
+// Rango S
+.border-rank-s { border-left-color: var(--rank-s) !important; }
+.rank-badge-s { 
+  color: var(--rank-s); 
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+// Rango A
+.border-rank-a { border-left-color: var(--rank-a) !important; }
+.rank-badge-a { 
+  color: var(--rank-a); 
+  background: rgba(179, 102, 255, 0.1);
+  border: 1px solid rgba(179, 102, 255, 0.3);
+}
+
+// Rango B
+.border-rank-b { border-left-color: var(--rank-b) !important; }
+.rank-badge-b { 
+  color: var(--rank-b); 
+  background: rgba(255, 153, 51, 0.1);
+  border: 1px solid rgba(255, 153, 51, 0.3);
+}
+
+// Rango C
+.border-rank-c { border-left-color: var(--rank-c) !important; }
+.rank-badge-c { 
+  color: var(--rank-c); 
+  background: rgba(51, 153, 255, 0.1);
+  border: 1px solid rgba(51, 153, 255, 0.3);
+}
+
+// Rango D
+.border-rank-d { border-left-color: var(--rank-d) !important; }
+.rank-badge-d { 
+  color: var(--rank-d); 
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+// --- SELLO DE COMPLETADO ---
+.completed-stamp {
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  color: #64748b;
+  border: 3px solid #64748b;
+  padding: 0.25rem 1rem;
+  transform: rotate(-10deg);
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  letter-spacing: 2px;
+  mask-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png"); // Efecto desgastado opcional
+  mask-size: 900px;
+  mix-blend-mode: overlay;
+}

@@ -1,0 +1,28 @@
+:host {
+  --background: #0a110d;
+}
+ion-content {
+  &::part(scroll) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+}
+
+.parchment-bg {
+  background-color: #1c271f;
+  background-image: linear-gradient(rgba(28, 39, 31, 0.95), rgba(28, 39, 31, 0.95)), 
+                    url('https://www.transparenttextures.com/patterns/dark-leather.png');
+}
+
+.shuriken-pattern {
+  background-image: radial-gradient(#11d452 0.5px, transparent 0.5px);
+  background-size: 24px 24px;
+  opacity: 0.05;
+}
+
+// Estilo para asegurar que el contenido no tenga scroll innecesario
+ion-content {
+  --padding-top: 0;
+  --padding-bottom: 0;
+}

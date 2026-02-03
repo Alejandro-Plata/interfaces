@@ -1,0 +1,15 @@
+/* app.component.scss */
+
+.content-viewport {
+  min-height: 100vh;
+  /* Espacio para el header sticky por defecto */
+  padding-top: 70px; 
+  transition: padding 0.3s;
+
+  &.auth-mode {
+    /* En login/register eliminamos el padding para que sea full screen */
+    padding-top: 0;
+    width: 100%;
+    display: block;
+  }
+}

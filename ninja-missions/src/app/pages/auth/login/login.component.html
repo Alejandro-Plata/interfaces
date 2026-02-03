@@ -1,0 +1,87 @@
+<ion-content [fullscreen]="true">
+  <div class="relative flex flex-col min-h-screen w-full items-center justify-center bg-background-dark font-display overflow-hidden p-4">
+    
+    <div class="absolute inset-0 shuriken-pattern pointer-events-none"></div>
+    <div class="absolute top-10 right-10 opacity-10 pointer-events-none">
+      <span class="material-symbols-outlined text-[200px] text-primary">navigation</span>
+    </div>
+    <div class="absolute bottom-10 left-10 opacity-10 pointer-events-none rotate-45">
+      <span class="material-symbols-outlined text-[150px] text-primary">security</span>
+    </div>
+
+    <div class="w-full max-w-[480px] flex flex-col gap-8 z-10 my-auto"> <div class="w-full">
+        <header class="flex items-center justify-between border-b border-primary/20 px-6 py-4 backdrop-blur-sm bg-background-dark/30 rounded-t-xl">
+          <div class="flex items-center gap-4 text-white">
+            <div class="size-8 text-primary">
+              <svg fill="none" viewBox="0 0 48 48">
+                <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h2 class="text-white text-xl font-bold tracking-tight">SHINOBI LOGIN</h2>
+          </div>
+          <button class="flex items-center justify-center rounded-lg h-10 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 px-3 transition-colors">
+            <span class="material-symbols-outlined text-[20px]">military_tech</span>
+          </button>
+        </header>
+      </div>
+
+      <div class="parchment-bg border border-primary/20 shadow-2xl rounded-xl p-8 md:p-10 relative overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none border-[1px] border-white/5 rounded-xl"></div>
+        
+        <div class="relative text-center mb-8">
+          <h1 class="text-white text-[32px] font-bold leading-tight pb-2">Authorized Access Only</h1>
+          <div class="h-1 w-16 bg-primary mx-auto rounded-full"></div>
+          <p class="text-white/70 text-base mt-4">Enter your credentials to view active scrolls and assignments.</p>
+        </div>
+
+        <form (submit)="onLogin()" class="flex flex-col gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Ninja Identifier</label>
+            <div class="relative group">
+              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">person</span>
+              <input type="text" placeholder="Enter Shinobi ID" 
+                class="w-full rounded-lg text-white border border-primary/30 bg-black/20 focus:ring-1 focus:ring-primary h-14 pl-12 pr-4 outline-none transition-all">
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="flex justify-between items-end px-1">
+              <label class="text-white text-sm font-medium uppercase tracking-wider">Access Code</label>
+              <a class="text-primary/80 hover:text-primary text-xs font-bold transition-colors cursor-pointer">Retrieve scroll?</a>
+            </div>
+            <div class="flex w-full items-stretch rounded-lg group">
+              <div class="relative flex-1">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">lock</span>
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="Enter Secret Scroll Password" 
+                  class="w-full rounded-l-lg text-white border border-primary/30 bg-black/20 focus:ring-1 focus:ring-primary h-14 pl-12 pr-4 outline-none transition-all border-r-0">
+              </div>
+              <button type="button" (click)="togglePassword()"
+                class="flex items-center justify-center px-4 rounded-r-lg border border-primary/30 border-l-0 bg-black/20 text-primary/50 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">{{ showPassword ? 'visibility_off' : 'visibility' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full h-14 bg-primary text-black flex items-center justify-center gap-3 rounded-lg text-lg font-bold mt-4 hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined">colorize</span>
+            <span>BEGIN MISSION</span>
+          </button>
+        </form>
+
+        <div class="mt-10 flex items-center justify-center gap-4 opacity-40">
+          <div class="h-[1px] flex-1 bg-white/20"></div>
+          <span class="text-[10px] text-white uppercase tracking-widest whitespace-nowrap">Leaf Village Network</span>
+          <div class="h-[1px] flex-1 bg-white/20"></div>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <p class="text-white/40 text-sm">New recruit? <a class="text-primary/60 hover:text-primary font-bold transition-colors cursor-pointer" routerLink="/register">Request enrollment</a></p>
+      </div>
+    </div>
+
+    <footer class="mt-auto py-8 text-center text-white/20 text-[10px] tracking-widest uppercase">
+      © Hidden Leaf Management Systems • Level 4 Clearance Required
+    </footer>
+  </div>
+</ion-content>

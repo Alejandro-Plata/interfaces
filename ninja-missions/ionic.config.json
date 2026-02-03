@@ -1,0 +1,7 @@
+{
+  "name": "ninja-missions",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
