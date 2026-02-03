@@ -1,4 +1,19 @@
+import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Preferences } from '@capacitor/preferences';
+
+interface UserResponse {
+  token: string,
+  user: User
+}
+
+interface User {
+  id: string,
+  username: string, 
+  rank: string,
+  experiencePoints: number,
+  avatarUrl: string
+}
 
 @Injectable({
   providedIn: 'root',
@@ -6,12 +21,21 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   
   private readonly TOKEN_KEY = 'token';
+  private readonly USER_KEY = 'user'
   private readonly URL_BASE = 'https://pr3-lista-misiones-konoha-backend.vercel.app/'
 
   constructor() { }
 
-  setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+  async setPreferences(user: UserResponse): Promise<void> {
+    await Preferences.set({
+      key: this.TOKEN_KEY,
+      value: user.token
+    });
+
+    await Preferences.set({
+      key: this.USER_KEY,
+      value: JSON.stringify(user.user)
+    });
   }
 
   getToken(): string | null {
@@ -22,7 +46,6 @@ export class AuthService {
   
     const response = await fetch(`${this.URL_BASE}auth/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
             });
 
@@ -32,7 +55,7 @@ export class AuthService {
       throw new Error(user.message);
     }
 
-    this.setToken(user.token);
+    this.setPreferences(user);
 
     }
 
@@ -40,7 +63,6 @@ export class AuthService {
   
     const response = await fetch(`${this.URL_BASE}auth/register`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
             });
 
@@ -50,7 +72,7 @@ export class AuthService {
       throw new Error(user.message);
     }
 
-    this.setToken(user.token);
+    this.setPreferences(user);
 
     }
 

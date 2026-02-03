@@ -5,7 +5,7 @@ import { IonContent } from '@ionic/angular/standalone';
   imports:[IonContent],
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent  implements OnInit {
 
@@ -21,7 +21,6 @@ export class LoginComponent  implements OnInit {
 
   onLogin() {
     console.log('Iniciando misión...');
-    // Aquí iría tu lógica de autenticación
   }
 
 }

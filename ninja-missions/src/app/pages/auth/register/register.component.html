@@ -3,10 +3,10 @@
     
     <div class="absolute inset-0 shuriken-pattern pointer-events-none"></div>
     <div class="absolute top-10 right-10 opacity-10 pointer-events-none">
-      <span class="material-symbols-outlined text-[200px] text-primary">navigation</span>
+      <span class="material-symbols-outlined text-[200px] text-primary">Navegación</span>
     </div>
     <div class="absolute bottom-10 left-10 opacity-10 pointer-events-none rotate-45">
-      <span class="material-symbols-outlined text-[150px] text-primary">security</span>
+      <span class="material-symbols-outlined text-[150px] text-primary">Seguridad</span>
     </div>
 
     <div class="w-full max-w-[520px] flex flex-col gap-8 z-10 my-auto">
@@ -18,7 +18,7 @@
               <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
             </svg>
           </div>
-          <h2 class="text-white text-xl font-bold tracking-tight">SHINOBI ENROLLMENT</h2>
+          <h2 class="text-white text-xl font-bold tracking-tight">Shinobi Recruiter</h2>
         </div>
         <div class="hidden md:flex items-center gap-3">
           <span class="text-primary/60 text-xs font-bold tracking-widest uppercase">Security Level: Jonin</span>
@@ -28,14 +28,14 @@
       <div class="parchment-bg border border-primary/20 shadow-2xl rounded-xl p-8 md:p-10 relative overflow-hidden">
         
         <div class="relative mb-8">
-          <h1 class="text-white text-[32px] font-bold leading-tight text-center pb-2">Shinobi Enrollment</h1>
+          <h1 class="text-white text-[32px] font-bold leading-tight text-center pb-2">Shinobi Recruiter</h1>
           <div class="h-1 w-16 bg-primary mx-auto rounded-full"></div>
-          <p class="text-white/70 text-base mt-4 text-center">Register your lineage and skills to join the operative network.</p>
+          <p class="text-white/70 text-base mt-4 text-center">Regístrate para entrar en nuestra red de operacionesk.</p>
         </div>
 
-        <form class="flex flex-col gap-5">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
           <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Ninja Identifier</label>
+            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Identificador ninja</label>
             <div class="relative group">
               <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">person</span>
               <input type="text" placeholder="Desired Shinobi ID" 
@@ -44,20 +44,18 @@
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Village Affiliation</label>
+            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Afiliación a la villa</label>
             <div class="relative group">
               <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">hub</span>
               <select class="w-full rounded-lg text-white border border-primary/30 bg-black/40 focus:ring-1 focus:ring-primary h-12 pl-12 pr-4 outline-none transition-all appearance-none">
-                <option disabled selected value="">Select your village</option>
-                <option value="leaf">Hidden Leaf (Konohagakure)</option>
-                <option value="sand">Hidden Sand (Sunagakure)</option>
-                <option value="mist">Hidden Mist (Kirigakure)</option>
+                <option disabled selected value="">Selecciona tu villa</option>
+                <option value="leaf">Àldea de la hoja (Konohagakure)</option>
               </select>
             </div>
           </div>
 
           <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Secret Scroll Password</label>
+            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Contraseña</label>
             <div class="relative group">
               <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">lock</span>
               <input type="password" placeholder="Enter secure passphrase" 
@@ -67,7 +65,7 @@
 
           <button type="submit" class="w-full h-14 bg-primary text-black flex items-center justify-center gap-3 rounded-lg text-lg font-bold mt-6 hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/20">
             <span class="material-symbols-outlined">colorize</span>
-            <span>REQUEST ENROLLMENT</span>
+            <span>Solicitar ingreso</span>
           </button>
         </form>
 
@@ -79,12 +77,12 @@
       </div>
 
       <div class="text-center">
-        <p class="text-white/40 text-sm">Existing operative? <a class="text-primary/60 hover:text-primary font-bold transition-colors cursor-pointer" routerLink="/login">Login here</a></p>
+        <p class="text-white/40 text-sm">¿Ya eres miembro? <a class="text-primary/60 hover:text-primary font-bold transition-colors cursor-pointer" routerLink="/login">Inicia sesión.</a></p>
       </div>
     </div>
 
     <footer class="mt-auto py-8 text-center text-white/20 text-[10px] tracking-widest uppercase">
-      © Hidden Leaf Management Systems • Level 4 Clearance Required
+      © Hidden Leaf Management Systems 
     </footer>
   </div>
 </ion-content>

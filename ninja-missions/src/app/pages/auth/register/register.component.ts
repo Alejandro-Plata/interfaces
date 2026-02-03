@@ -1,17 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   standalone: true,
   selector: 'app-register',
-  imports: [IonContent],
+  imports: [IonContent, ReactiveFormsModule, FormBuilder, Validators],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent  implements OnInit {
+export class RegisterComponent {
 
-  constructor() { }
+  private fb = inject(FormBuilder);
 
-  ngOnInit() {}
+  registerForm = this.fb.nonNullable.group({
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      
+      
+
+    }
+  }
 
 }
