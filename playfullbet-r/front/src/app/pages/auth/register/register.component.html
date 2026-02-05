@@ -1,0 +1,67 @@
+<div class="register-container">
+  <div class="background-overlay"></div>
+
+  <div class="card-glass">
+    <header class="header">
+      <h1 class="brand-title">MOLLY'S <span class="accent">LEAGUE</span></h1>
+      <p class="subtitle">Donde juegan los profesionales.</p>
+    </header>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      
+      <div class="input-group">
+        <label for="user">Usuario</label>
+        <input 
+          id="user" 
+          type="text" 
+          formControlName="username" 
+          placeholder="Ej. El_Diez"
+          autocomplete="off"
+        >
+        <div class="focus-line"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input 
+          id="user" 
+          type="text" 
+          formControlName="email" 
+          placeholder="Ej. pepe@gmail.com"
+          autocomplete="off"
+        >
+        <div class="focus-line"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="pass">Clave de Acceso</label>
+        <input 
+          id="pass" 
+          type="password" 
+          formControlName="password" 
+          placeholder="••••••••"
+        >
+        <div class="focus-line"></div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-banner">
+          <span class="icon">⚠</span> {{ errorMessage }}
+        </div>
+      }
+
+      <button type="submit" [disabled]="registerForm.invalid || isLoading">
+        @if (isLoading) {
+          <span class="spinner"></span> Cargando...
+        } @else {
+          Registrarse
+        }
+      </button>
+
+    </form>
+    
+    <div class="footer-ref">
+      <small>Juega con responsabilidad. El estadio nunca duerme.</small>
+    </div>
+  </div>
+</div>

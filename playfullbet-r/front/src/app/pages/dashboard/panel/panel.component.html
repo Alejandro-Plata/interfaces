@@ -1,0 +1,45 @@
+<app-header />
+<app-sidebar />
+<div class="panel-container">
+  
+  <header class="panel-header">
+    <div class="title-group">
+      <h1>Panel de Partidos</h1>
+      <span class="matchday">Jornada {{ currentMatchday }}</span>
+    </div>
+
+    <div class="controls">
+      <div class="search-box">
+        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery" 
+          placeholder="Buscar equipo o liga..."
+        >
+      </div>
+    </div>
+  </header>
+
+  <div class="filters-bar">
+    <button [class.active]="filterStatus === 'Todos'" (click)="setFilter('Todos')">Todos</button>
+    <button [class.active]="filterStatus === 'Próximos'" (click)="setFilter('Próximos')">Próximos</button>
+    <button [class.active]="filterStatus === 'En vivo'" (click)="setFilter('En vivo')" class="live-filter">
+      <span class="dot"></span> En Vivo
+    </button>
+    <button [class.active]="filterStatus === 'Finalizados'" (click)="setFilter('Finalizados')">Finalizados</button>
+  </div>
+
+  <div class="matches-grid">
+    @for (match of filteredMatchesBySearch(); track match.id) {
+      <app-match-card [match]="match"></app-match-card>
+    } @empty {
+      <div class="empty-state">
+        <p>No hay partidos que coincidan con tu búsqueda.</p>
+      </div>
+    }
+  </div>
+</div>

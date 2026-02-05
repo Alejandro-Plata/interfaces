@@ -1,0 +1,154 @@
+@import '../../../../theme/variables.scss';
+
+.panel-container {
+  margin-left: 240px; // Coincide con el ancho del sidebar
+  padding: 2.5rem;
+  background-color: $obsidian; // Ahora es el gris claro de fondo (#f8f9fa)
+  min-height: calc(100vh - 70px);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+
+  .title-group {
+    h1 {
+      font-family: $font-serif;
+      color: $text-light; // Color Oscuro (#1a202c)
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: -0.5px;
+    }
+    
+    .matchday {
+      display: block;
+      margin-top: 5px;
+      color: $gold;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+// --- BUSCADOR ELEGANTE ---
+.search-box {
+  position: relative;
+  width: 280px;
+  display: flex;
+  align-items: center;
+
+  // Icono SVG
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    color: $text-muted; // Gris medio
+    pointer-events: none; // Para que el click pase al input
+    transition: color 0.3s;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 3rem; // Espacio a la izq para el icono
+    background: #ffffff;
+    border: 1px solid #e2e8f0; // Borde gris sutil
+    border-radius: 50px; // Redondeado completo (Pill shape)
+    font-family: $font-sans;
+    font-size: 0.9rem;
+    color: $text-light;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &::placeholder {
+      color: #a0aec0;
+    }
+
+    // Estado Focus (Brillo dorado)
+    &:focus {
+      outline: none;
+      border-color: $gold;
+      box-shadow: 0 4px 12px rgba($gold, 0.15);
+      
+      & + .search-icon { 
+        color: $gold; 
+      }
+    }
+  }
+  
+  // Pequeño truco: si quieres que el icono cambie de color al focus del input
+  &:focus-within .search-icon {
+    color: $gold;
+  }
+}
+
+// --- BARRA DE FILTROS ---
+.filters-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  padding-top: .5rem;
+  overflow-x: auto; // Por si en móviles se sale
+  padding-bottom: 5px;
+
+  button {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: $text-muted;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: $font-sans;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    
+    &:hover {
+      background: #f7fafc;
+      color: $text-light;
+      border-color: #cbd5e0;
+      transform: translateY(-1px);
+    }
+
+    &.active {
+      background: $gold;
+      border-color: $gold;
+      color: white; // Texto blanco sobre dorado
+      font-weight: 700;
+      box-shadow: 0 4px 6px rgba($gold, 0.25);
+    }
+    
+    // Filtro "En Vivo" (punto rojo)
+    &.live-filter {
+      display: flex; align-items: center; gap: 6px;
+      .dot {
+        display: block; width: 6px; height: 6px;
+        background: #e53e3e; border-radius: 50%;
+        box-shadow: 0 0 0 2px rgba(229, 62, 62, 0.2);
+      }
+    }
+  }
+}
+
+// --- GRID ---
+.matches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+// Estado Vacío
+.empty-state {
+  grid-column: 1 / -1; // Ocupa todo el ancho
+  text-align: center;
+  padding: 4rem;
+  color: $text-muted;
+  
+  p {
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,123 @@
+@import '../../../../theme/variables';
+
+.ranking-container {
+  margin-left: 240px;
+  background-color: #f8f9fa; // Gris muy claro
+  min-height: calc(100vh - 70px);
+  padding: 3rem;
+}
+
+.content-area {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  h1 { font-family: $font-serif; font-size: 2.5rem; color: $text-light; margin: 0; }
+  p { color: #718096; margin-top: 10px; font-size: 1rem; }
+}
+
+// --- PODIO ---
+.podium-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; // Alineados abajo para el efecto de escalón
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.podium-card {
+  display: flex; flex-direction: column; align-items: center;
+  background: white;
+  border-radius: 16px 16px 0 0; // Solo bordes superiores redondeados (opcional) o tarjeta flotante
+  border-radius: 20px; // Tarjeta flotante queda mejor
+  padding: 2rem;
+  width: 220px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  position: relative;
+  transition: transform 0.3s;
+
+  &:hover { transform: translateY(-10px); }
+
+  .avatar-ring {
+    width: 80px; height: 80px; border-radius: 50%; padding: 4px; margin-bottom: 1rem;
+    img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  }
+
+  .info {
+    text-align: center;
+    .username { display: block; font-weight: 700; color: $text-light; margin-bottom: 5px; }
+    .points { display: block; font-weight: 800; color: #718096; font-size: 0.9rem; }
+  }
+
+  .rank-badge {
+    position: absolute; bottom: -15px;
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: white; border: 3px solid white;
+  }
+
+  // Estilos Específicos (Oro, Plata, Bronce)
+  &.gold {
+    width: 260px; padding: 3rem 2rem; z-index: 2; // Más grande y por delante
+    border: 2px solid rgba($gold, 0.3);
+    background: linear-gradient(to bottom, #fff, #fffaeb);
+    
+    .crown-icon { font-size: 2.5rem; position: absolute; top: -25px; animation: float 3s infinite ease-in-out; }
+    .avatar-ring { background: $gold; box-shadow: 0 0 20px rgba($gold, 0.4); width: 100px; height: 100px; }
+    .rank-badge { background: $gold; font-size: 1.2rem; width: 40px; height: 40px; }
+    .points { color: darken($gold, 10%); font-size: 1.1rem; }
+  }
+
+  &.silver {
+    border-bottom: 4px solid #cbd5e0;
+    .avatar-ring { background: #cbd5e0; }
+    .rank-badge { background: #a0aec0; }
+  }
+
+  &.bronze {
+    border-bottom: 4px solid #ed8936;
+    .avatar-ring { background: #ed8936; } // Color bronce/naranja
+    .rank-badge { background: #dd6b20; }
+  }
+}
+
+// --- LISTA ---
+.list-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  border: 1px solid #e2e8f0;
+
+  .ranking-table {
+    width: 100%; border-collapse: collapse;
+    
+    th {
+      text-align: left; padding: 1.5rem; color: #a0aec0; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;
+      &.pos-col { text-align: center; width: 60px; }
+      &.pts-col { text-align: right; }
+    }
+
+    .player-row {
+      transition: background 0.2s;
+      &:hover { background: #f7fafc; }
+      
+      td { padding: 1rem 1.5rem; border-top: 1px solid #f7fafc; color: $text-light; font-weight: 600; }
+      
+      .pos { text-align: center; color: #cbd5e0; font-weight: 800; }
+      
+      .user-cell {
+        display: flex; align-items: center; gap: 1rem;
+        .tiny-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid #e2e8f0; }
+        .name { font-size: 1rem; }
+      }
+
+      .pts { text-align: right; font-family: 'Inter', monospace; color: $text-light; font-weight: 700; }
+    }
+  }
+}
+
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }

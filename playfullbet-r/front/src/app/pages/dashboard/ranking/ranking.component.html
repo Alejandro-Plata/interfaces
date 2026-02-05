@@ -1,0 +1,86 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+
+<div class="ranking-container">
+  
+  <main class="content-area">
+    <div class="page-header">
+      <h1>Salón de la Fama</h1>
+      <p>Los mejores estrategas de la liga.</p>
+    </div>
+
+    @if (isLoading()) {
+      <div class="loading">Cargando clasificación...</div>
+    } @else {
+
+      <section class="podium-section">
+        @if (top3()[1]; as silver) {
+          <div class="podium-card silver">
+            <div class="rank-badge">2</div>
+            <div class="avatar-ring">
+              <img [src]="silver.avatar" alt="Silver">
+            </div>
+            <div class="info">
+              <span class="username">{{ silver.username }}</span>
+              <span class="points">{{ silver.points }} pts</span>
+            </div>
+          </div>
+        }
+
+        @if (top3()[0]; as gold) {
+          <div class="podium-card gold">
+            <div class="crown-icon">👑</div>
+            <div class="avatar-ring">
+              <img [src]="gold.avatar" alt="Gold">
+            </div>
+            <div class="info">
+              <span class="username">{{ gold.username }}</span>
+              <span class="points">{{ gold.points }} pts</span>
+            </div>
+            <div class="rank-badge">1</div>
+          </div>
+        }
+
+        @if (top3()[2]; as bronze) {
+          <div class="podium-card bronze">
+            <div class="rank-badge">3</div>
+            <div class="avatar-ring">
+              <img [src]="bronze.avatar" alt="Bronze">
+            </div>
+            <div class="info">
+              <span class="username">{{ bronze.username }}</span>
+              <span class="points">{{ bronze.points }} pts</span>
+            </div>
+          </div>
+        }
+      </section>
+
+      <section class="list-section">
+        <div class="table-card">
+          <table class="ranking-table">
+            <thead>
+              <tr>
+                <th class="pos-col">#</th>
+                <th class="user-col">Jugador</th>
+                <th class="pts-col">Puntos Totales</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of restOfPlayers(); track user.id) {
+                <tr class="player-row">
+                  <td class="pos">{{ user.position }}</td>
+                  <td class="user-cell">
+                    <img [src]="user.avatar" class="tiny-avatar">
+                    <span class="name">{{ user.username }}</span>
+                  </td>
+                  <td class="pts">{{ user.points }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    }
+  </main>
+</div>

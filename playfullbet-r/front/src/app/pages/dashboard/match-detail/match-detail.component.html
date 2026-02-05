@@ -1,0 +1,113 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+
+<div class="detail-container">
+  
+  <main class="main-content">
+    @if (match(); as m) {
+      
+      <div class="hero-card">
+        <div class="league-header">
+           <span class="league-name">{{ m.league }}</span>
+           <span class="dot">•</span>
+           <span class="round">Jornada {{ m.matchday }}</span>
+        </div>
+
+        <div class="score-row">
+          <div class="team home">
+             <span class="role-badge local">LOCAL</span> <div class="logo-wrapper">
+                <img [src]="m.homeTeam.logoUrl" class="big-logo">
+             </div>
+             <h2>{{ m.homeTeam.name }}</h2>
+          </div>
+
+          <div class="result-box">
+             @if(m.status === 'Próximos') {
+                <span class="vs">VS</span>
+                <div class="date-badge">{{ m.date }}</div>
+             } @else {
+                <div class="the-score">
+                  {{ m.score.home }} - {{ m.score.away }}
+                </div>
+                <div class="match-status" [class.live]="m.status === 'En vivo'">
+                  @if(m.status === 'En vivo') { <span class="blink">●</span> 65' } @else { FINAL }
+                </div>
+             }
+          </div>
+
+          <div class="team away">
+             <span class="role-badge visitor">VISITANTE</span> <div class="logo-wrapper">
+                <img [src]="m.awayTeam.logoUrl" class="big-logo">
+             </div>
+             <h2>{{ m.awayTeam.name }}</h2>
+          </div>
+        </div>
+
+        @if(m.status !== 'Próximos') {
+           <div class="scorers-strip">
+             @for(event of m.events; track event.id) {
+               <div class="scorer-pill" [class.away]="event.teamId === 'away'">
+                 <span class="min">{{ event.minute }}'</span>
+                 <img [src]="event.playerAvatar" class="mini-avatar">
+                 <span class="name">{{ event.player }}</span>
+                 <span class="ball">⚽</span>
+               </div>
+             }
+           </div>
+        }
+      </div>
+
+      <div class="standings-panel">
+         <h3>Clasificación - {{ m.league }}</h3>
+         
+         <div class="table-responsive">
+            <table class="standings-table">
+               <thead>
+                  <tr>
+                    <th class="pos-col">#</th>
+                    <th class="team-col">Equipo</th>
+                    <th class="stat-col" title="Partidos Jugados">PJ</th>
+                    <th class="stat-col" title="Ganados">G</th>
+                    <th class="stat-col" title="Empatados">E</th>
+                    <th class="stat-col" title="Perdidos">P</th>
+                    <th class="stat-col" title="Goles a Favor">GF</th>
+                    <th class="stat-col" title="Goles en Contra">GC</th>
+                    <th class="stat-col diff-col">+/-</th> <th class="pts-col">PTS</th>
+                    <th class="form-col">Forma</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @for(row of standings(); track row.team) {
+                    <tr [class.highlight]="row.team === m.homeTeam.name || row.team === m.awayTeam.name">
+                       <td class="pos">{{ row.pos }}</td>
+                       <td class="team-cell">{{ row.team }}</td>
+                       
+                       <td class="stat">{{ row.played }}</td>
+                       <td class="stat">{{ row.won }}</td>
+                       <td class="stat">{{ row.drawn }}</td>
+                       <td class="stat">{{ row.lost }}</td>
+                       <td class="stat gf">{{ row.gf }}</td>
+                       <td class="stat gc">{{ row.gc }}</td>
+                       <td class="stat diff">{{ row.gf - row.gc }}</td>
+                       
+                       <td class="pts">{{ row.pts }}</td>
+                       
+                       <td class="form-col">
+                          <div class="form-dots">
+                             @for(f of row.form; track $index) {
+                                <span class="dot" [class.w]="f==='w'" [class.d]="f==='d'" [class.l]="f==='l'"></span>
+                             }
+                          </div>
+                       </td>
+                    </tr>
+                  }
+               </tbody>
+            </table>
+         </div>
+      </div>
+    }
+  </main>
+
+  <aside class="twitch-chat">
+     </aside>
+</div>

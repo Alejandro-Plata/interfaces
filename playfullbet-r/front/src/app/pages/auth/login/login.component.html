@@ -1,0 +1,57 @@
+<div class="login-container">
+  <div class="background-overlay"></div>
+
+  <div class="card-glass">
+    <header class="header">
+      <h1 class="brand-title">MOLLY'S <span class="accent">LEAGUE</span></h1>
+      <p class="subtitle">Acceso exclusivo a miembros.</p>
+    </header>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      
+      <div class="input-group">
+        <label for="user">ID de Jugador</label>
+        <input 
+          id="user" 
+          type="text" 
+          formControlName="username" 
+          placeholder="Tu Alias"
+          autocomplete="username"
+        >
+        <div class="focus-line"></div>
+      </div>
+
+      <div class="input-group">
+        <label for="pass">Credencial</label>
+        <input 
+          id="pass" 
+          type="password" 
+          formControlName="password" 
+          placeholder="••••••••"
+          autocomplete="current-password"
+        >
+        <div class="focus-line"></div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-banner">
+          <span class="icon">⛔</span> {{ errorMessage }}
+        </div>
+      }
+
+      <button type="submit" [disabled]="loginForm.invalid || isLoading">
+        @if (isLoading) {
+          <span class="spinner"></span> Validando...
+        } @else {
+          ENTRAR AL CAMPO
+        }
+      </button>
+
+      <div class="auth-links">
+        <a routerLink="/register" class="gold-link">¿Aún no tienes ficha? Regístrate</a>
+        <a href="#" class="faint-link">Olvidé mi credencial</a>
+      </div>
+
+    </form>
+  </div>
+</div>

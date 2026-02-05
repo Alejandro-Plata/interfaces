@@ -1,0 +1,110 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+
+<div class="standings-container">
+  <main class="content-area">
+
+    <div class="page-header">
+      <h1>Clasificación</h1>
+      <p>La Liga • Temporada 2025/26</p>
+    </div>
+
+    <section class="table-card">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th class="pos">#</th>
+              <th class="team-col">Equipo</th>
+              <th class="stat" title="Partidos Jugados">PJ</th>
+              <th class="stat" title="Victorias">G</th>
+              <th class="stat" title="Empates">E</th>
+              <th class="stat" title="Derrotas">P</th>
+              <th class="stat" title="Goles Favor">GF</th>
+              <th class="stat" title="Goles Contra">GC</th>
+              <th class="stat diff">+/-</th>
+              <th class="pts">PTS</th>
+              <th class="form-col">Racha</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (team of tableData(); track team.teamId) {
+              <tr [class.ucl]="team.position <= 4" [class.uel]="team.position === 5">
+                <td class="pos">{{ team.position }}</td>
+                <td class="team-cell">
+                  <img [src]="team.logoUrl" [alt]="team.teamName">
+                  <span class="name">{{ team.teamName }}</span>
+                </td>
+                <td class="stat">{{ team.played }}</td>
+                <td class="stat">{{ team.won }}</td>
+                <td class="stat">{{ team.drawn }}</td>
+                <td class="stat">{{ team.lost }}</td>
+                <td class="stat gf">{{ team.gf }}</td>
+                <td class="stat gc">{{ team.gc }}</td>
+                <td class="stat diff">{{ team.gf - team.gc }}</td>
+                <td class="pts">{{ team.pts }}</td>
+                <td class="form-col">
+                  <div class="dots">
+                    @for (f of team.form; track $index) {
+                      <span class="dot" [class.w]="f === 'w'" [class.d]="f === 'd'" [class.l]="f === 'l'"></span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span class="dot ucl"></span> Champions League
+        <span class="dot uel"></span> Europa League
+      </div>
+    </section>
+
+    <section class="results-section">
+      
+      <div class="matchday-controls">
+        <button class="arrow-btn" (click)="prevDay()" [disabled]="currentMatchday() === 1">
+          ←
+        </button>
+        
+        <div class="matchday-display">
+          <span class="label">JORNADA</span>
+          <span class="number">{{ currentMatchday() }}</span>
+        </div>
+
+        <button class="arrow-btn" (click)="nextDay()" [disabled]="currentMatchday() === maxMatchday">
+          →
+        </button>
+      </div>
+
+      <div class="results-grid">
+        @for (match of matchResults(); track match.id) {
+          <div class="result-card">
+            
+            <div class="team home">
+              <span class="name">{{ match.homeTeam.name }}</span>
+              <img [src]="match.homeTeam.logoUrl">
+            </div>
+
+            <div class="score-pill">
+              <span class="s-home">{{ match.score.home }}</span>
+              <span class="div">:</span>
+              <span class="s-away">{{ match.score.away }}</span>
+            </div>
+
+            <div class="team away">
+              <img [src]="match.awayTeam.logoUrl">
+              <span class="name">{{ match.awayTeam.name }}</span>
+            </div>
+
+          </div>
+        } @empty {
+            <div class="no-data">Cargando resultados...</div>
+        }
+      </div>
+
+    </section>
+
+  </main>
+</div>
