@@ -1,0 +1,258 @@
+:host {
+    display: block;
+    height: 100%;
+    /* Importante para que todas las cards tengan la misma altura */
+}
+
+.mission-card {
+    background-color: #121212;
+    border: 1px solid #333;
+    padding: 24px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Efecto Hoja Técnica (Linea superior) */
+.mission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #333;
+    transition: background 0.3s;
+}
+
+.mission-card:hover {
+    transform: translateY(-4px);
+    border-color: #666;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.mission-card:hover::before {
+    background: #fff;
+    /* La línea superior se ilumina al pasar el mouse */
+}
+
+.mission-card.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(100%);
+}
+
+/* --- HEADER --- */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rank-badge {
+    font-family: monospace;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 2px;
+    color: white;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.reward {
+    color: #A67B5B;
+    /* Color Madera */
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+/* --- BODY --- */
+.card-body {
+    flex-grow: 1;
+    /* Empuja el footer hacia abajo */
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    color: white;
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+    font-family: sans-serif;
+    /* Tu fuente Display */
+}
+
+.description {
+    color: #999;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+}
+
+.meta-info {
+    color: #666;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    /* Empuja info ubicación al fondo del body */
+}
+
+/* --- FOOTER --- */
+.card-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    /* ESTO separa "Disponible" del Botón */
+    align-items: center;
+}
+
+.status {
+    font-family: monospace;
+    color: #555;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+.action-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.action-btn:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.insufficient-rank {
+    font-family: monospace;
+    font-weight: bold;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #666;
+    padding: 8px 20px;
+    border: 1px solid #333;
+    background: transparent;
+    display: inline-block;
+}
+
+/* Variantes de Botones por Rango */
+.btn-d:hover {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+}
+
+.btn-c:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+.btn-b:hover {
+    background: #a855f7;
+    border-color: #a855f7;
+    color: white;
+}
+
+.btn-a:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.btn-s {
+    border-color: #f59e0b;
+    color: #f59e0b;
+}
+
+.btn-s:hover {
+    background: #f59e0b;
+    color: black;
+}
+
+/* Variantes de Badge */
+.rank-d {
+    background: #064e3b;
+    border: 1px solid #10b981;
+    color: #10b981;
+}
+
+.rank-c {
+    background: #1e3a8a;
+    border: 1px solid #3b82f6;
+    color: #3b82f6;
+}
+
+.rank-b {
+    background: #4a1d96;
+    border: 1px solid #a855f7;
+    color: #a855f7;
+}
+
+.rank-a {
+    background: #7f1d1d;
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
+
+.rank-s {
+    background: #78350f;
+    border: 1px solid #f59e0b;
+    color: #f59e0b;
+}
+
+/* Borde Inferior Animado */
+.hover-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+}
+
+.mission-card:hover .hover-border {
+    transform: scaleX(1);
+}
+
+.border-d {
+    background: #10b981;
+}
+
+.border-c {
+    background: #3b82f6;
+}
+
+.border-b {
+    background: #a855f7;
+}
+
+.border-a {
+    background: #ef4444;
+}
+
+.border-s {
+    background: #f59e0b;
+}

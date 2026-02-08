@@ -1,0 +1,456 @@
+:host {
+    --background: #0d0d0d;
+}
+
+ion-content {
+    --background: #0d0d0d;
+}
+
+/* ============================================
+   CONTAINER
+   ============================================ */
+.profile-container {
+    min-height: 100vh;
+    background: #0d0d0d;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+.bg-pattern {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(#333 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.profile-header {
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 1px solid #222;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 40px;
+        right: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--wood-primary), transparent);
+    }
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #888;
+    text-decoration: none;
+    font-family: var(--font-tech);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border: 1px solid #333;
+    background: transparent;
+    transition: all 0.2s;
+
+    ion-icon {
+        font-size: 1rem;
+    }
+
+    &:hover {
+        color: var(--wood-primary);
+        border-color: var(--wood-primary);
+    }
+}
+
+.header-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, #333, transparent);
+}
+
+/* ============================================
+   CONTENT LAYOUT
+   ============================================ */
+.profile-content {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   PROFILE CARD
+   ============================================ */
+.profile-card {
+    background: #121212;
+    border: 1px solid #333;
+    margin-bottom: 40px;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--wood-primary);
+    }
+
+    &::before {
+        top: -1px;
+        left: -1px;
+        border-right: none;
+        border-bottom: none;
+    }
+
+    &::after {
+        bottom: -1px;
+        right: -1px;
+        border-left: none;
+        border-top: none;
+    }
+}
+
+.card-header {
+    padding: 12px 24px;
+    border-bottom: 1px solid #222;
+}
+
+.card-label {
+    font-size: 0.7rem;
+    color: var(--wood-primary);
+    letter-spacing: 2px;
+}
+
+.card-body {
+    padding: 30px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    @media (max-width: 600px) {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+/* Avatar */
+.avatar-section {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-frame {
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--wood-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+}
+
+.avatar-placeholder {
+    font-size: 3.5rem;
+    color: var(--wood-primary);
+    font-weight: bold;
+    font-family: var(--font-display);
+}
+
+.avatar-badge {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--wood-primary);
+    color: #000;
+    padding: 4px 16px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* Info Section */
+.info-section {
+    flex: 1;
+}
+
+.user-name {
+    color: white;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    margin: 0 0 4px 0;
+}
+
+.user-rank {
+    color: #666;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin: 0 0 20px 0;
+}
+
+/* Rank Progress */
+.rank-progress {
+    max-width: 400px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.progress-label {
+    font-size: 0.65rem;
+    color: #666;
+    letter-spacing: 1px;
+}
+
+.progress-value {
+    font-size: 0.75rem;
+    color: var(--wood-primary);
+}
+
+.progress-bar {
+    height: 6px;
+    background: #222;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--wood-primary), var(--wood-dark));
+    transition: width 0.5s ease;
+}
+
+/* ============================================
+   STATS SECTION
+   ============================================ */
+.stats-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    margin: 0 0 20px 0;
+}
+
+.title-label {
+    color: var(--wood-primary);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 500px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card {
+    background: #121212;
+    border: 1px solid #333;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+
+    &:hover {
+        border-color: var(--wood-primary);
+    }
+
+    ion-icon {
+        font-size: 1.8rem;
+        color: var(--wood-primary);
+    }
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+/* ============================================
+   ACTIVITY SECTION
+   ============================================ */
+.activity-section {
+    margin-bottom: 40px;
+}
+
+.activity-list {
+    background: #121212;
+    border: 1px solid #333;
+}
+
+.activity-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #222;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: rgba(166, 123, 91, 0.05);
+    }
+}
+
+.activity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.activity-title {
+    color: white;
+    font-size: 0.95rem;
+}
+
+.activity-status {
+    color: #f59e0b;
+    font-size: 0.75rem;
+
+    &.completed {
+        color: #10b981;
+    }
+}
+
+.activity-reward {
+    color: var(--wood-primary);
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.sidebar-card {
+    background: #121212;
+    border: 1px solid #333;
+    padding: 20px;
+}
+
+.sidebar-title {
+    color: #666;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    margin: 0 0 16px 0;
+}
+
+/* Sidebar Actions */
+.sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    background: transparent;
+    border: 1px solid #333;
+    color: #888;
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+
+    ion-icon {
+        font-size: 1.1rem;
+    }
+
+    &:hover {
+        border-color: var(--wood-primary);
+        color: white;
+    }
+
+    &.danger {
+        &:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+    }
+}
+
+/* Specialties */
+.specialties {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.specialty-tag {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #888;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+/* Village */
+.village-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.village-name {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.village-sub {
+    color: #666;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}

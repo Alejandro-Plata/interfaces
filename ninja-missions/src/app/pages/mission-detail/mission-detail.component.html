@@ -1,7 +1,186 @@
 <ion-content [fullscreen]="true">
-  @if(accepted) {
-  <app-accepted-mission></app-accepted-mission>
-} @else {
-  <app-non-accepted-mission></app-non-accepted-mission>
-}
+  <div class="detail-container">
+    <!-- Background Pattern -->
+    <div class="bg-pattern"></div>
+
+    @if (mission) {
+    <!-- Header -->
+    <header class="detail-header">
+      <a routerLink="/missions" class="back-btn">
+        <ion-icon name="arrow-back"></ion-icon>
+        <span>TABLÓN DE MISIONES</span>
+      </a>
+      <div class="header-line"></div>
+    </header>
+
+    <div class="detail-content">
+      <main class="mission-main">
+
+        <div class="profile-card">
+          <div class="profile-header">
+            <span class="profile-label font-tech">任務 DETALLES DE LA MISIÓN</span>
+          </div>
+          <div class="profile-body">
+            <div class="profile-row">
+              <span class="row-label">TÍTULO</span>
+              <span class="row-value">{{ mission!.title }}</span>
+            </div>
+            <div class="profile-row">
+              <span class="row-label">DISPONIBILIDAD</span>
+              <span class="row-value status-badge">{{ mission!.status }}</span>
+            </div>
+            <div class="profile-row">
+              <span class="row-label">RECOMPENSA</span>
+              <span class="row-value reward">{{ mission!.reward | number }} ¥</span>
+            </div>
+            <div class="profile-row">
+              <span class="row-label">RANGO</span>
+              <span class="row-value rank-badge" [ngClass]="getRankClass(mission!.rankRequirement)">{{
+                mission!.rankRequirement }}</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="mission-section">
+          <h1 class="mission-title">{{ mission!.title }}</h1>
+          <div class="title-underline"></div>
+
+          <p class="mission-description">{{ mission!.description }}</p>
+        </section>
+
+        @if (!isAccepted && !isMissionCompleted()) {
+        <div class="action-section">
+          @if (canAcceptMission()) {
+          <button class="accept-btn" (click)="acceptMission()">
+            <span class="btn-text">ACEPTAR MISIÓN</span>
+            <div class="btn-fill"></div>
+          </button>
+          <p class="action-note font-tech">Al aceptar, el contrato se sella. El abandono resultará en penalización.</p>
+          } @else if (mission!.status === 'EN_CURSO') {
+          <div class="locked-section">
+            <div class="lock-icon">
+              <ion-icon name="lock-closed"></ion-icon>
+            </div>
+            <p class="lock-text font-tech">MISIÓN EN CURSO</p>
+            <p class="lock-subtext">Esta misión ya ha sido aceptada por otro ninja.</p>
+          </div>
+          } @else if (mission!.status === 'COMPLETADA') {
+          <div class="locked-section">
+            <div class="lock-icon">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <p class="lock-text font-tech">MISIÓN COMPLETADA</p>
+            <p class="lock-subtext">Esta misión ya ha sido completada.</p>
+          </div>
+          }
+        </div>
+        }
+
+        @if (!isAccepted && canAcceptMission()) {
+        <div class="locked-section">
+          <div class="lock-icon">
+            <ion-icon name="lock-closed"></ion-icon>
+          </div>
+          <p class="lock-text font-tech">INFORME DE MISIÓN BLOQUEADO</p>
+          <p class="lock-subtext">Acepta la misión para desbloquear el formulario de reporte.</p>
+        </div>
+        }
+
+        @if (isAccepted) {
+        <div class="report-section">
+          <div class="section-header">
+            <span class="section-label font-tech">報告 INFORME DE CAMPO</span>
+            <div class="section-line"></div>
+          </div>
+
+          <div class="upload-area">
+            <h3 class="upload-title font-tech">EVIDENCIA</h3>
+
+            @if (!uploadedImage) {
+            <div class="dropzone" (click)="takePicture()">
+              <ion-icon name="camera"></ion-icon>
+              <span class="dropzone-text">Subir fotografía</span>
+              <span class="dropzone-note">Click para seleccionar archivo</span>
+            </div>
+            } @else {
+            <div class="uploaded-preview">
+              <img [src]="uploadedImage" alt="Evidencia">
+              <button class="remove-btn" (click)="removeImage()">
+                <ion-icon name="close"></ion-icon>
+              </button>
+              <span class="preview-badge font-tech">EVIDENCIA</span>
+            </div>
+            }
+          </div>
+
+          <div class="scroll-area">
+            <h3 class="scroll-title font-tech">PERGAMINO DE REPORTE</h3>
+            <div class="scroll-container">
+              <textarea [(ngModel)]="reportText"
+                placeholder="Describe cómo ha ido la misión: objetivos cumplidos, dificultades encontradas, estado del equipo..."
+                class="scroll-textarea"></textarea>
+              <div class="scroll-footer">
+                <span class="char-count font-tech">{{ reportText.length }} / 2000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="report-actions">
+            <button class="submit-btn" (click)="submitReport()">
+              <ion-icon name="send"></ion-icon>
+              <span>ENVIAR REPORTE FINAL</span>
+              <div class="btn-fill"></div>
+            </button>
+
+            <button class="abandon-btn" (click)="abandonMission()">
+              <ion-icon name="warning"></ion-icon>
+              <span>ABANDONAR MISIÓN</span>
+            </button>
+          </div>
+        </div>
+        }
+
+      </main>
+
+      <aside class="mission-sidebar">
+        <div class="sidebar-card">
+          <h3 class="sidebar-title font-tech">ESTADO</h3>
+          <div class="status-indicator" [ngClass]="{'active': isAccepted, 'completed': isMissionCompleted()}">
+            <div class="status-dot"></div>
+            <span>
+              @if (isMissionCompleted()) {
+              COMPLETADA
+              } @else if (isAccepted) {
+              EN PROGRESO
+              } @else {
+              PENDIENTE
+              }
+            </span>
+          </div>
+        </div>
+
+        <div class="sidebar-card reward-card">
+          <h3 class="sidebar-title font-tech">RECOMPENSA</h3>
+          <div class="reward-amount">
+            <span class="amount">{{ mission!.reward }}</span>
+            <span class="currency">¥</span>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-title font-tech">RANGO REQUERIDO</h3>
+          <div class="rank-display" [ngClass]="getRankClass(mission!.rankRequirement)">
+            {{ mission!.rankRequirement }}
+          </div>
+        </div>
+      </aside>
+    </div>
+    } @else {
+    <div class="no-mission">
+      <p>No se encontró la misión.</p>
+      <a routerLink="/missions" class="back-link">Volver al tablón</a>
+    </div>
+    }
+
+  </div>
 </ion-content>

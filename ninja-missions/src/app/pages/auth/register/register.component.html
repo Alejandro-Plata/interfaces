@@ -1,88 +1,111 @@
 <ion-content [fullscreen]="true">
-  <div class="relative flex flex-col min-h-screen w-full items-center justify-center bg-background-dark font-display overflow-hidden p-4">
-    
-    <div class="absolute inset-0 shuriken-pattern pointer-events-none"></div>
-    <div class="absolute top-10 right-10 opacity-10 pointer-events-none">
-      <span class="material-symbols-outlined text-[200px] text-primary">Navegación</span>
-    </div>
-    <div class="absolute bottom-10 left-10 opacity-10 pointer-events-none rotate-45">
-      <span class="material-symbols-outlined text-[150px] text-primary">Seguridad</span>
-    </div>
+  <div class="register-container">
 
-    <div class="w-full max-w-[520px] flex flex-col gap-8 z-10 my-auto">
-      
-      <header class="flex items-center justify-between border-b border-primary/20 px-6 py-4 backdrop-blur-sm bg-background-dark/30 rounded-t-xl">
-        <div class="flex items-center gap-4 text-white">
-          <div class="size-8 text-primary">
-            <svg fill="none" viewBox="0 0 48 48">
-              <path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
-            </svg>
+    <div class="bg-pattern"></div>
+
+    <div class="register-card">
+      <header class="card-header">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo-icon">
+              <svg fill="none" viewBox="0 0 48 48">
+                <path clip-rule="evenodd"
+                  d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                  fill="currentColor" fill-rule="evenodd"></path>
+              </svg>
+            </div>
+            <h2 class="logo-text">Shinobi Recruiter</h2>
           </div>
-          <h2 class="text-white text-xl font-bold tracking-tight">Shinobi Recruiter</h2>
+          <span class="security-badge font-tech">機密 CLASSIFIED</span>
         </div>
-        <div class="hidden md:flex items-center gap-3">
-          <span class="text-primary/60 text-xs font-bold tracking-widest uppercase">Security Level: Jonin</span>
-        </div>
+        <div class="header-line"></div>
       </header>
 
-      <div class="parchment-bg border border-primary/20 shadow-2xl rounded-xl p-8 md:p-10 relative overflow-hidden">
-        
-        <div class="relative mb-8">
-          <h1 class="text-white text-[32px] font-bold leading-tight text-center pb-2">Shinobi Recruiter</h1>
-          <div class="h-1 w-16 bg-primary mx-auto rounded-full"></div>
-          <p class="text-white/70 text-base mt-4 text-center">Regístrate para entrar en nuestra red de operacionesk.</p>
+      <div class="card-body">
+        <div class="title-section">
+          <span class="title-label font-tech">登録 REGISTRO</span>
+          <h1 class="title">Solicitud de Ingreso</h1>
+          <p class="subtitle">Únete a nuestra red de operaciones encubiertas.</p>
         </div>
 
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
-          <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Identificador ninja</label>
-            <div class="relative group">
-              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">person</span>
-              <input type="text" placeholder="Desired Shinobi ID" 
-                class="w-full rounded-lg text-white border border-primary/30 bg-black/40 focus:ring-1 focus:ring-primary h-12 pl-12 pr-4 outline-none transition-all">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+
+          <div class="form-group">
+            <label class="form-label font-tech">USUARIO</label>
+            <div class="input-wrapper">
+              <input type="text" formControlName="username" placeholder="Ingresa tu nombre de usuario">
+              <div class="input-border"></div>
+
+              @if (registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
+              @if (registerForm.get('username')?.hasError('required')) {
+              <div class="error">El nombre de usuario es obligatorio</div>
+              }
+              @else if (registerForm.get('username')?.hasError('minlength')) {
+              <div class="error">El nombre de usuario debe tener al menos 3 caracteres</div>
+              }
+              }
             </div>
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Afiliación a la villa</label>
-            <div class="relative group">
-              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">hub</span>
-              <select class="w-full rounded-lg text-white border border-primary/30 bg-black/40 focus:ring-1 focus:ring-primary h-12 pl-12 pr-4 outline-none transition-all appearance-none">
-                <option disabled selected value="">Selecciona tu villa</option>
-                <option value="leaf">Àldea de la hoja (Konohagakure)</option>
+          <div class="form-group">
+            <label class="form-label font-tech">ALDEA</label>
+            <div class="input-wrapper">
+              <select>
+                <option value="" selected>Aldea de la Hoja (Konohagakure)</option>
               </select>
+              <div class="input-border"></div>
             </div>
           </div>
 
-          <div class="flex flex-col gap-2">
-            <label class="text-white text-sm font-medium uppercase tracking-wider px-1">Contraseña</label>
-            <div class="relative group">
-              <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/50 group-focus-within:text-primary transition-colors">lock</span>
-              <input type="password" placeholder="Enter secure passphrase" 
-                class="w-full rounded-lg text-white border border-primary/30 bg-black/40 focus:ring-1 focus:ring-primary h-12 pl-12 pr-4 outline-none transition-all">
+          <div class="form-group">
+            <label class="form-label font-tech">CONTRASEÑA</label>
+            <div class="input-wrapper password-wrapper">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
+                placeholder="Crea una contraseña segura">
+              <ion-icon name="eye-outline" (click)="togglePassword()" class="toggle-password"></ion-icon>
+              <div class="input-border"></div>
+
+              @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+              @if (registerForm.get('password')?.hasError('required')) {
+              <div class="error">La contraseña es obligatoria</div>
+              }
+              @else if (registerForm.get('password')?.hasError('minlength')) {
+              <div class="error">La contraseña debe tener al menos 4 caracteres</div>
+              }
+              }
             </div>
           </div>
 
-          <button type="submit" class="w-full h-14 bg-primary text-black flex items-center justify-center gap-3 rounded-lg text-lg font-bold mt-6 hover:bg-primary/90 active:scale-95 transition-all shadow-lg shadow-primary/20">
-            <span class="material-symbols-outlined">colorize</span>
-            <span>Solicitar ingreso</span>
+          @if (errorMessage) {
+          <div class="login-error-alert">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <span>{{ errorMessage }}</span>
+          </div>
+          }
+
+          <button type="submit" class="submit-btn">
+            <span class="btn-text">SOLICITAR INGRESO</span>
+            <div class="btn-border"></div>
           </button>
+
         </form>
 
-        <div class="mt-8 flex items-center justify-center gap-4 opacity-40">
-          <div class="h-[1px] flex-1 bg-white/20"></div>
-          <span class="text-[10px] text-white uppercase tracking-widest whitespace-nowrap">United Shinobi Alliance</span>
-          <div class="h-[1px] flex-1 bg-white/20"></div>
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text font-tech">ALIANZA SHINOBI</span>
+          <div class="divider-line"></div>
         </div>
+
+        <p class="login-link">
+          ¿Ya eres miembro? <a routerLink="/login">Inicia sesión</a>
+        </p>
       </div>
 
-      <div class="text-center">
-        <p class="text-white/40 text-sm">¿Ya eres miembro? <a class="text-primary/60 hover:text-primary font-bold transition-colors cursor-pointer" routerLink="/login">Inicia sesión.</a></p>
-      </div>
+      <footer class="card-footer">
+        <span class="font-tech">© HIDDEN LEAF MANAGEMENT SYSTEMS</span>
+      </footer>
+
     </div>
 
-    <footer class="mt-auto py-8 text-center text-white/20 text-[10px] tracking-widest uppercase">
-      © Hidden Leaf Management Systems 
-    </footer>
   </div>
 </ion-content>

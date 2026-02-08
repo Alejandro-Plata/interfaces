@@ -36,22 +36,92 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Roboto:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap');
 
 :root {
-  --bg-dark: #0d0d0d;
-  --card-bg: #151515;
-  --accent-red: #c70039;
-  --accent-gold: #d4af37;
-  
-  --text-main: #e0e0e0;
-  --text-muted: #666666;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --border-color: #333333;
-  
-  --font-title: 'Sawarabi Mincho', serif;
-  --font-body: 'Roboto', sans-serif;
+  /* Paleta Sobria */
+  --ion-background-color: #0d0d0d;
+  /* Casi negro */
+  --ion-text-color: #e0e0e0;
 
-  --shadow-dark: 0 20px 50px rgba(0, 0, 0, 0.6);
-  --katana-clip: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  /* Color Madera (Acento Principal) */
+  --wood-primary: #A67B5B;
+  --wood-dark: #5C4033;
+
+  /* Colores de Rango (Neon apagado) */
+  --rank-d: #10b981;
+  /* Verde */
+  --rank-c: #3b82f6;
+  /* Azul */
+  --rank-b: #8b5cf6;
+  /* Violeta */
+  --rank-a: #ef4444;
+  /* Rojo */
+  --rank-s: #f59e0b;
+  /* Dorado/Naranja peligro */
+
+  /* Fuentes */
+  --font-display: 'Kanit', sans-serif;
+  --font-tech: 'Space Mono', monospace;
+}
+
+body {
+  font-family: var(--font-display);
+}
+
+/* Reset de Ionic para Brutalismo */
+ion-button {
+  --border-radius: 0px !important;
+  font-family: var(--font-tech);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+ion-card {
+  --background: #141414;
+  --color: white;
+  border: 1px solid #333;
+  border-radius: 0px !important;
+  box-shadow: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: visible;
+  /* Para efectos hover */
+}
+
+/* Scrollbar minimalista */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wood-primary);
+}
+
+/* ============================================
+   Missions List - Global Styles for Ionic Components
+   (ion-menu renders outside component scope)
+   ============================================ */
+ion-menu {
+  --width: 300px;
+  --background: #0a0a0a;
+  border-right: 1px solid #333;
+}
+
+ion-split-pane {
+  --side-max-width: 300px;
+  --side-min-width: 250px;
+}
+
+/* Main page background */
+#main-content.ion-page {
+  background-color: #0d0d0d;
 }

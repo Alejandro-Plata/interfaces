@@ -1,0 +1,35 @@
+<div class="mission-card" [class.disabled]="!canAccept">
+
+  <div class="card-header">
+    <div class="rank-badge" [ngClass]="'rank-' + mission.rankRequirement.toLowerCase()">
+      RANGO-{{ mission.rankRequirement }}
+    </div>
+    <div class="reward">
+      {{ mission.reward | number }} <span class="currency">¥</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h2 class="title">{{ mission.title }}</h2>
+    <p class="description">{{ mission.description }}</p>
+
+    <div class="meta-info">
+      <ion-icon name="location-sharp"></ion-icon>
+      <span>{{ mission.rankRequirement }}</span>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <span class="status">{{ mission.status }}</span>
+
+    @if(canAccept()) {
+    <button class="action-btn" [ngClass]="'btn-' + mission.rankRequirement.toLowerCase()" (click)="viewDetails()">
+      VER DETALLES
+    </button>
+    } @else {
+    <span class="insufficient-rank">RANGO INSUFICIENTE</span>
+    }
+  </div>
+
+  <div class="hover-border" [ngClass]="'border-' + mission.rankRequirement.toLowerCase()"></div>
+</div>

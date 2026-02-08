@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AcceptedMissionComponent } from './accepted-mission.component';
+import { MissionCardComponent } from './mission-card.component';
 
-describe('AcceptedMissionComponent', () => {
-  let component: AcceptedMissionComponent;
-  let fixture: ComponentFixture<AcceptedMissionComponent>;
+describe('MissionCardComponent', () => {
+  let component: MissionCardComponent;
+  let fixture: ComponentFixture<MissionCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AcceptedMissionComponent ],
+      declarations: [ MissionCardComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AcceptedMissionComponent);
+    fixture = TestBed.createComponent(MissionCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

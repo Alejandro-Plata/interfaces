@@ -1,89 +1,88 @@
-import { JsonPipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Preferences } from '@capacitor/preferences';
+import { AuthResponse, NinjaProfile } from 'src/app/types/types';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom, Observable } from 'rxjs';
+import { API_URL } from 'src/app/utils/consts';
+import { removePreferences } from 'src/app/utils/removePreferences';
+import { saveNinjaData } from 'src/app/utils/setPreferences';
+import { getToken } from 'src/app/utils/getPreferences';
+import { Router } from '@angular/router';
 
-interface UserResponse {
-  token: string,
-  user: User
-}
-
-interface User {
-  id: string,
-  username: string, 
-  rank: string,
-  experiencePoints: number,
-  avatarUrl: string
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  
-  private readonly TOKEN_KEY = 'token';
-  private readonly USER_KEY = 'user'
-  private readonly URL_BASE = 'https://pr3-lista-misiones-konoha-backend.vercel.app/'
 
-  constructor() { }
+  private readonly URL = API_URL;
 
-  async setPreferences(user: UserResponse): Promise<void> {
-    await Preferences.set({
-      key: this.TOKEN_KEY,
-      value: user.token
-    });
+  static token: string | null = null;
 
-    await Preferences.set({
-      key: this.USER_KEY,
-      value: JSON.stringify(user.user)
-    });
+  constructor(private http: HttpClient, private router: Router) {
+    this.initializeToken();
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+  async initializeToken(): Promise<void> {
+    const token = await getToken();
+    if (token) {
+      AuthService.token = token;
+    }
   }
 
-  async login(username: string, password: string): Promise<void> {
-  
-    const response = await fetch(`${this.URL_BASE}auth/login`, {
-                method: 'POST',
-                body: JSON.stringify({ username, password }),
-            });
+  async login(username: string, password: string): Promise<void | string> {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<AuthResponse>(
+          `${this.URL}/auth/login`,
+          { username, password },
+          { observe: 'response' }
+        )
+      );
 
-    const user = await response.json();
+      if (response.status === 200 && response.body) {
+        AuthService.token = response.body.token;
+        await saveNinjaData(response.body);
+      } else {
+        return response.body?.message;
+      }
 
-    if(!response.ok) {
-      throw new Error(user.message);
+    } catch (error) {
+      console.error('Error en login:', error);
+      throw error;
     }
-
-    this.setPreferences(user);
-
-    }
-
-    async register(username: string, password: string): Promise<void> {
-  
-    const response = await fetch(`${this.URL_BASE}auth/register`, {
-                method: 'POST',
-                body: JSON.stringify({ username, password }),
-            });
-
-    const user = await response.json();
-
-    if(!response.ok) {
-      throw new Error(user.message);
-    }
-
-    this.setPreferences(user);
-
-    }
-
-  isLoggedIn(): boolean {
-    // !this.getToken() -> devuelve true si el token no existe; !(!this.getToken()) devuelve true si el token existe
-    return !!this.getToken();
   }
 
-  logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
+  async register(username: string, password: string, rank?: string): Promise<void | string> {
+    try {
+      const response = await firstValueFrom(
+        this.http.post<AuthResponse>(
+          `${this.URL}/auth/register`,
+          { username, password, rank },
+          { observe: 'response' }
+        )
+      );
+
+      if (response.status === 201 && response.body) {
+        AuthService.token = response.body.token;
+        await saveNinjaData(response.body);
+      } else {
+        return response.body?.message;
+      }
+
+    } catch (error) {
+      console.error('Error en registro:', error);
+      throw error;
+    }
   }
 
+  async logout(): Promise<void> {
+    AuthService.token = null;
+    await removePreferences();
+    this.router.navigate(['/login']);
+  }
+
+  getProfile(): Observable<NinjaProfile> {
+    return this.http.get<NinjaProfile>(`${this.URL}/ninjas/me/stats`);
+  }
 
 }

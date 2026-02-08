@@ -14,12 +14,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/missions-list/missions-list.component').then((m) => m.MissionsListComponent),
   },
   {
-    path: 'mission-detail',
+    path: 'mission-detail/:id',
     loadComponent: () => import('./pages/mission-detail/mission-detail.component').then((m) => m.MissionDetailComponent),
   },
   {
     path: 'profile',
-    loadComponent: () => import('./pages/auth/profile/profile.component').then((m) => m.ProfileComponent),
+    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent),
   },
   {
     path: '',

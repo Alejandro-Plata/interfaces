@@ -1,0 +1,97 @@
+<ion-content [fullscreen]="true">
+    <div class="profile-container">
+
+        <div class="bg-pattern"></div>
+
+        <header class="profile-header">
+            <a routerLink="/missions" class="back-btn">
+                <ion-icon name="arrow-back"></ion-icon>
+                <span>TABLÓN DE MISIONES</span>
+            </a>
+            <div class="header-line"></div>
+        </header>
+
+        <div class="profile-content">
+
+            <main class="profile-main">
+
+                <div class="profile-card">
+                    <div class="card-header">
+                        <span class="card-label font-tech">忍者 Perfil</span>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="avatar-section">
+                            <div class="avatar-frame">
+                                <img [src]="profile?.profile?.avatar" alt="Imagen de perfil de ninja" />
+                            </div>
+                            <div class="avatar-badge font-tech">{{ profile?.profile?.rank }}</div>
+                        </div>
+
+                        <div class="info-section">
+                            <h1 class="user-name">{{ profile?.profile?.username }}</h1>
+                            <p class="user-rank font-tech">RANGO: {{ profile?.profile?.rank }}</p>
+
+                            <div class="rank-progress">
+                                <div class="progress-header">
+                                    <span class="progress-label font-tech">PROGRESO PARA EL SIGUIENTE RANGO</span>
+                                    <span class="progress-value font-tech">{{ profile?.profile?.experience }} XP</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" [style.width.%]="xpPercentage"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-section">
+                    <h2 class="section-title">
+                        <span class="title-label font-tech">統計 ESTADÍSTICAS</span>
+                    </h2>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <ion-icon name="checkmark-done"></ion-icon>
+                            <div class="stat-info">
+                                <span class="stat-value">{{ profile?.stats?.completedMissions || '--' }}</span>
+                                <span class="stat-label font-tech">COMPLETADAS</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <ion-icon name="flash"></ion-icon>
+                            <div class="stat-info">
+                                <span class="stat-value">{{ profile?.stats?.totalAssignments || '--' }}</span>
+                                <span class="stat-label font-tech">ACTIVAS</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <ion-icon name="cash"></ion-icon>
+                            <div class="stat-info">
+                                <span class="stat-value">3.500</span>
+                                <span class="stat-label font-tech">RYOS GANADOS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </main>
+            <aside class="profile-sidebar">
+
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title font-tech">VILLA</h3>
+                    <div class="village-info">
+                        <span class="village-name">Aldea de la Hoja</span>
+                        <span class="village-sub font-tech">Konohagakure</span>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+
+    </div>
+</ion-content>
