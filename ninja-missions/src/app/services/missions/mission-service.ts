@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Rank, MissionReport, Ninja, MissionData, MissionsResponse } from 'src/app/types/types';
+import { Rank, MissionReport, Ninja, MissionData } from 'src/app/types/types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from 'src/app/utils/consts';
@@ -35,7 +35,7 @@ export class MissionService {
 
   }
 
-  getMissions(rank?: Rank, status?: string): Observable<MissionsResponse> {
+  getMissions(rank?: Rank, status?: string): Observable<{ total: number; page: number; limit: number; data: MissionData[] }> {
     const params: any = {};
 
     if (rank && rank !== 'ALL') {

@@ -29,13 +29,6 @@ export interface AuthResponse {
     message?: string;
 }
 
-export interface MissionsResponse {
-    total: number;
-    page: number;
-    limit: number;
-    data: MissionData[];
-}
-
 export interface MissionData {
     id: string;
     title: string;
