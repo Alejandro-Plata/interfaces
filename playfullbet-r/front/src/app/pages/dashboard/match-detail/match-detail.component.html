@@ -142,9 +142,19 @@
       </div>
 
       } @else {
-      <div class="error-state">
-         <p>No se pudo cargar el partido</p>
-         <button (click)="goBack()">Volver</button>
+      <div class="error-container">
+         <div class="error-card">
+            <div class="icon-wrapper">
+               <ion-icon name="alert-circle" class="error-icon"></ion-icon>
+            </div>
+            <h2 class="error-title">¡UPS! ALGO SALIÓ MAL</h2>
+            <p class="error-message">No pudimos cargar la información del partido. <br> Inténtalo de nuevo más tarde o
+               vuelve al panel.</p>
+            <button class="error-btn" (click)="goBack()">
+               <ion-icon name="arrow-back"></ion-icon>
+               VOLVER AL HISTORIAL
+            </button>
+         </div>
       </div>
       }
 

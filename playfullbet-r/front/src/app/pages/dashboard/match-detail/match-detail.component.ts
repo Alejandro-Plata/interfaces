@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close } from 'ionicons/icons';
+import { send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close, alertCircle } from 'ionicons/icons';
 import { ChatMessage, Match, Standing } from '../../../types/types';
 import { BetMatchComponent } from './bet-match/bet-match.component';
 import { MatchService } from '../../../services/match.service';
 import { getUser } from '../../../utils/getPreferences';
 import { getTeamLogo } from '../../../utils/team-logos';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
   selector: 'app-match-detail',
@@ -41,7 +42,7 @@ export class MatchDetailComponent implements OnInit, AfterViewInit {
     private router: Router,
     private matchService: MatchService
   ) {
-    addIcons({ send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close });
+    addIcons({ send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close, alertCircle });
   }
 
   async ngOnInit() {
