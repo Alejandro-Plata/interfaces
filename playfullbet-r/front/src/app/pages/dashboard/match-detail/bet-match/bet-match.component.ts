@@ -6,6 +6,7 @@ import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { wallet, trophy, add, remove } from 'ionicons/icons';
 import { BetService } from '../../../../services/bet.service';
+import { NotificationService } from '../../../../services/notification.service';
 import { BetDto, BetData } from '../../../../types/types';
 import { getUser } from '../../../../utils/getPreferences';
 
@@ -30,7 +31,8 @@ export class BetMatchComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private betService: BetService
+        private betService: BetService,
+        private notificationService: NotificationService
     ) {
         addIcons({ wallet, trophy, add, remove });
     }
@@ -62,7 +64,7 @@ export class BetMatchComponent implements OnInit {
         try {
             const user = await getUser();
             if (!user) {
-                alert('Debes iniciar sesión para apostar');
+                this.notificationService.showAlert('Debes iniciar sesión para apostar', 'error');
                 return;
             }
 
@@ -74,11 +76,11 @@ export class BetMatchComponent implements OnInit {
             };
 
             await this.betService.placeBet(bet);
-            alert('Apuesta realizada con éxito');
+            this.notificationService.showAlert('Apuesta realizada con éxito', 'success');
 
         } catch (error: any) {
             console.error(error);
-            alert(error.message || 'Error al realizar la apuesta');
+            this.notificationService.showAlert(error.message || 'Error al realizar la apuesta', 'error');
         }
     }
 
