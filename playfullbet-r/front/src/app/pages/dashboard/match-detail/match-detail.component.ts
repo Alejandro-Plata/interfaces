@@ -1,67 +1,245 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MatchesService } from 'src/app/services/matches-service';
-import { ChatMessage, MatchDetail } from 'src/app/types/types';
-import { SidebarComponent } from "src/app/components/sidebar/sidebar.component";
-import { HeaderComponent } from "src/app/components/header/header.component";
+import { Component, ElementRef, ViewChild, AfterViewInit, HostListener, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close } from 'ionicons/icons';
+import { ChatMessage, Match, Standing } from '../../../types/types';
+import { BetMatchComponent } from './bet-match/bet-match.component';
+import { MatchService } from '../../../services/match.service';
+import { getUser } from '../../../utils/getPreferences';
+import { getTeamLogo } from '../../../utils/team-logos';
 
 @Component({
   selector: 'app-match-detail',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonIcon, BetMatchComponent],
   templateUrl: './match-detail.component.html',
   styleUrls: ['./match-detail.component.scss'],
-  imports: [SidebarComponent, HeaderComponent, FormsModule],
 })
-export class MatchDetailComponent implements OnInit {
 
-  private route = inject(ActivatedRoute);
-  private matchesService = inject(MatchesService);
+export class MatchDetailComponent implements OnInit, AfterViewInit {
+  @ViewChild('chatStream') chatStreamRef!: ElementRef<HTMLDivElement>;
 
-  standings = signal([
-  { pos: 1, team: 'Real Madrid', played: 14, won: 11, drawn: 2, lost: 1, gf: 35, gc: 10, pts: 35, form: ['w','w','w','d','w'] },
-  { pos: 2, team: 'Girona', played: 14, won: 11, drawn: 2, lost: 1, gf: 32, gc: 18, pts: 35, form: ['w','w','l','w','w'] },
-  { pos: 3, team: 'Barcelona', played: 14, won: 9, drawn: 4, lost: 1, gf: 29, gc: 15, pts: 31, form: ['w','d','w','w','l'] },
-  { pos: 4, team: 'Atlético', played: 13, won: 9, drawn: 1, lost: 3, gf: 30, gc: 12, pts: 28, form: ['w','l','w','w','w'] },
-  { pos: 5, team: 'Athletic', played: 14, won: 7, drawn: 4, lost: 3, gf: 25, gc: 19, pts: 25, form: ['d','w','l','w','d'] },
-]);
+  matchId: number = 0;
+  match: Match | null = null;
+  isLoading: boolean = true;
 
-  match = signal<MatchDetail | null>(null);
-  chatMessages = signal<ChatMessage[]>([]);
-  newMessage = signal('');
-  
-  // Formulario de apuesta
-  betAmount = signal<number | null>(null);
-  predictionHome = signal<number | null>(null);
-  predictionAway = signal<number | null>(null);
+  standings: Standing[] = [];
+  chatMessages: ChatMessage[] = [];
+
+  newMessage: string = '';
+  showScrollButton: boolean = false;
+  currentUser: any = null;
+  isChatOpen: boolean = false;
+
+  getTeamLogo = getTeamLogo;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private matchService: MatchService
+  ) {
+    addIcons({ send, happyOutline, arrowBack, football, chatbubbles, statsChart, arrowDown, people, close });
+  }
 
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.match.set(await this.matchesService.getMatchById(id));
-      this.chatMessages.set(await this.matchesService.getChatMessages(id));
+      this.matchId = parseInt(id, 10);
+      this.currentUser = await getUser();
+      await this.loadAllData();
     }
   }
 
-  sendMessage() {
-    if (!this.newMessage().trim()) return;
-    
-    const msg: ChatMessage = {
-      id: Date.now(),
-      user: 'Yo', // Debería venir del AuthService
-      avatar: 'assets/default-avatar.png',
-      text: this.newMessage(),
-      timestamp: new Date(),
-      isMe: true
-    };
-
-    // Actualizamos señal del chat
-    this.chatMessages.update(msgs => [...msgs, msg]);
-    this.newMessage.set('');
-    
-    // Scroll al fondo (lógica visual opcional)
+  async loadAllData() {
+    this.isLoading = true;
+    try {
+      await Promise.all([
+        this.loadMatch(),
+        this.loadStandings(),
+        this.loadChat()
+      ]);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      this.isLoading = false;
+      this.isLoading = false;
+      setTimeout(() => {
+        this.scrollToBottom();
+        this.checkScrollForBetting();
+      }, 100);
+    }
   }
 
-  placeBet() {
-    alert(`Apuesta realizada: ${this.betAmount()}€ al ${this.predictionHome()}-${this.predictionAway()}`);
+  checkScrollForBetting() {
+    const action = this.route.snapshot.queryParamMap.get('action');
+    if (action === 'bet') {
+      const element = document.getElementById('betting-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }
+
+  async loadMatch() {
+    try {
+      this.match = await this.matchService.getMatchById(this.matchId);
+    } catch (error) {
+      console.error('Error loading match:', error);
+    }
+  }
+
+  async loadStandings() {
+    try {
+      const data = await this.matchService.getStandings();
+      this.standings = data.map((team: any, index: number) => ({
+        pos: index + 1,
+        team: team.name,
+        played: team.pj,
+        won: team.pg,
+        drawn: team.pe,
+        lost: team.pp,
+        gf: team.gf,
+        gc: team.gc,
+        pts: team.pts
+      }));
+    } catch (error) {
+      console.error('Error loading standings', error);
+    }
+  }
+
+  async loadChat() {
+    try {
+      const msgs = await this.matchService.getChatMessages(this.matchId);
+      this.chatMessages = msgs.map((m: any) => ({
+        id: m.id,
+        matchId: m.matchId,
+        username: m.username,
+        user: m.username, // mapeo
+        avatar: `https://api.dicebear.com/7.x/notionists/svg?seed=${m.username}`, // generar avatar si falta
+        text: m.text,
+        time: m.time, // formateado o cadena
+        isMe: this.currentUser && m.username === this.currentUser.username
+      }));
+    } catch (error) {
+      console.error('Error loading chat', error);
+    }
+  }
+
+  async sendMessage() {
+    if (!this.newMessage.trim() || !this.currentUser) return;
+
+    try {
+      const text = this.newMessage;
+      this.newMessage = ''; // limpieza optimista
+
+      const res = await this.matchService.sendMessage(this.matchId, text, this.currentUser.username);
+
+      // ¿Añadir localmente o recargar? Añadir localmente por velocidad
+      const newMsg: ChatMessage = {
+        id: res.id,
+        matchId: this.matchId,
+        username: res.username,
+        user: res.username,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${res.username}`,
+        text: res.text,
+        time: res.time,
+        isMe: true
+      };
+      this.chatMessages.push(newMsg);
+
+      setTimeout(() => {
+        this.scrollToBottom();
+        this.checkScrollPosition();
+      }, 50);
+
+    } catch (error) {
+      console.error('Error sending message:', error);
+      alert('Error al enviar mensaje');
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/dashboard/historial']);
+  }
+
+  getMatchStatus(): string {
+    if (!this.match) return '';
+
+    switch (this.match.status) {
+      case 'pending': return 'Próximo';
+      case 'live': return 'En vivo';
+      case 'finished': return 'Finalizado';
+      default: return '';
+    }
+  }
+
+  get matchTime(): string {
+    if (!this.match || this.match.status !== 'live') return '';
+    return this.calculateMatchTime(this.match.time);
+  }
+
+  private calculateMatchTime(timeString: string): string {
+    const matchDate = new Date(timeString);
+    const now = new Date();
+    const diffMs = now.getTime() - matchDate.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+
+    if (diffMins < 0) return "0'";
+    if (diffMins > 90) return "90+'";
+    return `${diffMins}'`;
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.scrollToBottom();
+      this.checkScrollPosition();
+    }, 100);
+
+    if (this.chatStreamRef) {
+      const element = this.chatStreamRef.nativeElement;
+      element.addEventListener('scroll', () => {
+        this.checkScrollPosition();
+      });
+    }
+  }
+
+  // Lógica del scroll del chat
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScrollPosition();
+  }
+
+  checkScrollPosition() {
+    if (!this.chatStreamRef) return;
+
+    const element = this.chatStreamRef.nativeElement;
+    const hasScroll = element.scrollHeight > element.clientHeight;
+    const isAtBottom = element.scrollHeight - element.scrollTop - element.clientHeight < 50;
+
+    this.showScrollButton = hasScroll && !isAtBottom;
+  }
+
+  scrollToBottom() {
+    if (!this.chatStreamRef) return;
+
+    const chatStream = this.chatStreamRef.nativeElement;
+    chatStream.scrollTo({
+      top: chatStream.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+  toggleChat() {
+    this.isChatOpen = !this.isChatOpen;
+    if (this.isChatOpen) {
+      setTimeout(() => this.scrollToBottom(), 100);
+    }
+  }
+
+  navigateToTeam(teamName: string) {
+    this.router.navigate(['/dashboard/team', teamName]);
   }
 }

@@ -1,82 +1,133 @@
-import { Component, OnInit } from '@angular/core';
-import { MatchCardComponent } from 'src/app/components/match-card/match-card.component';
-import { Match, Status } from 'src/app/types/types';
-import { FormsModule } from '@angular/forms';
-import { HeaderComponent } from "src/app/components/header/header.component";
-import { SidebarComponent } from "src/app/components/sidebar/sidebar.component";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { trophy, trendingUp, football, checkmarkCircle, closeCircle, timeOutline } from 'ionicons/icons';
+import { BetService } from '../../../services/bet.service';
+import { AuthService } from '../../../services/auth-service';
+import { EnrichedBet, UserStats, Prediction } from '../../../types/types';
+import { getTeamLogo } from '../../../utils/team-logos';
+
 
 @Component({
   selector: 'app-panel',
-  imports: [MatchCardComponent, FormsModule, HeaderComponent, SidebarComponent],
+  standalone: true,
+  imports: [CommonModule, IonIcon],
   templateUrl: './panel.component.html',
-  styleUrls: ['./panel.component.scss'],
+  styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent  implements OnInit {
+export class PanelComponent implements OnInit, OnDestroy {
 
-  matches: Match[] = []; // Lista cruda de partidos
-  searchQuery = '';
-  filterStatus: Status | 'Todos' = 'Todos';
-  currentMatchday = 1;
+  userStats: UserStats = {
+    totalPoints: 0,
+    winRate: 0,
+    totalBets: 0
+  };
 
-  async ngOnInit() {
-    // Aquí llamarías a tu servicio con fetch
-    // this.matches.set(await this.matchesService.getAll());
-    
-    // MOCK DATA para visualizar el diseño
-    this.matches = [
-      {
-        id: '1',
-        homeTeam: { id: 'rm', name: 'Real Madrid', logoUrl: 'assets/pack-escudos/real_madrid.png' },
-        awayTeam: { id: 'bar', name: 'Barcelona', logoUrl: 'assets/pack-escudos/fc_barcelona.png' },
-        score: { home: 2, away: 1 },
-        status: 'En vivo',
-        date: new Date(Date.now()).toLocaleDateString('es-ES'),
-        matchday: 14,
-        league: 'La Liga',
-        lastScorer: 'Vinicius Jr (72\')'
-      },
-      {
-        id: '2',
-        homeTeam: { id: 'liv', name: 'Almería', logoUrl: 'assets/pack-escudos/almeria.png' },
-        awayTeam: { id: 'mci', name: 'Alavés', logoUrl: 'assets/pack-escudos/alaves.png' },
-        score: { home: 0, away: 0 },
-        status: 'Próximos',
-        date: new Date(Date.now() + 86400000).toLocaleDateString('es-ES'),
-        matchday: 14,
-        league: 'Premier League'
-      },
-      {
-        id: '3',
-        homeTeam: { id: 'juv', name: 'Mallorca', logoUrl: 'assets/pack-escudos/mallorca.png' },
-        awayTeam: { id: 'mil', name: 'Sevilla', logoUrl: 'assets/pack-escudos/sevilla.png' },
-        score: { home: 1, away: 3 },
-        status: 'Finalizados',
-        date: new Date(Date.now() - 86400000).toLocaleDateString('es-ES'),
-        matchday: 13,
-        league: 'Serie A',
-        lastScorer: 'Leao (89\')'
-      }
-    ]
+  getTeamLogo = getTeamLogo;
+
+  predictions: Prediction[] = [];
+  isLoading: boolean = true;
+  private updateInterval: any;
+
+  constructor(
+    private router: Router,
+    private betService: BetService,
+    private authService: AuthService
+  ) {
+    addIcons({ trophy, trendingUp, football, checkmarkCircle, closeCircle, timeOutline });
   }
 
-   filteredMatchesBySearch(): Match[] {
+  async ngOnInit() {
+    await this.loadUserData();
 
-    if (!this.matches) return [];
+    // Poling para que cada 10 segundos se actualice el marcador
+    this.updateInterval = setInterval(async () => {
+      await this.loadUserData();
+    }, 10000);
+  }
 
-    return this.matches.filter(match => {
+  ngOnDestroy() {
+    // Limpiamos el intervalo al destruir el componente
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+    }
+  }
 
-      const matchesStatus = this.filterStatus === 'Todos' || match.status === this.filterStatus;
+  async loadUserData() {
+    try {
+      this.isLoading = true;
+      const user = await this.authService.syncUser();
 
-      const query = this.searchQuery.toLowerCase();
-      const matchesSearch = match.homeTeam.name.toLowerCase().includes(query) || match.awayTeam.name.toLowerCase().includes(query) || match.league.toLowerCase().includes(query);
+      if (!user) {
+        console.error('No se encontró usuario');
+        return;
+      }
 
-      // Se tiene que cumplir que coincida con la búsqueda y con la query
-      return matchesStatus && matchesSearch;
+      const enrichedBets = await this.betService.getUserBets(user.id);
+
+      this.calculateStats(enrichedBets, user.points);
+      this.mapPredictions(enrichedBets);
+
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private calculateStats(bets: EnrichedBet[], userPoints: number) {
+    const totalBets = bets.length;
+    const finishedBets = bets.filter(b => b.status === 'win' || b.status === 'loss');
+    const wonBets = bets.filter(b => b.status === 'win').length;
+    const winRate = finishedBets.length > 0 ? (wonBets / finishedBets.length) * 100 : 0;
+
+    this.userStats = {
+      totalPoints: userPoints,
+      winRate: Math.round(winRate * 10) / 10,
+      totalBets
+    };
+  }
+
+  private mapPredictions(bets: EnrichedBet[]) {
+    const predictions: Prediction[] = bets.map(bet => ({
+      id: bet.id.toString(),
+      matchId: bet.matchId.toString(),
+      homeTeam: bet.match?.home || 'TBD',
+      awayTeam: bet.match?.away || 'TBD',
+      homeTeamLogo: getTeamLogo(bet.match?.home || ''),
+      awayTeamLogo: getTeamLogo(bet.match?.away || ''),
+      predictedScore: {
+        home: bet.homeScore,
+        away: bet.awayScore
+      },
+      actualScore: bet.match && bet.match.status === 'finished' ? {
+        home: bet.match.homeScore,
+        away: bet.match.awayScore
+      } : null,
+      status: this.mapBetStatus(bet.status),
+      pointsEarned: bet.pointsEarned,
+      date: bet.match ? new Date(bet.match.time).toLocaleDateString('es-ES') : 'TBD',
+      league: bet.match?.league || 'Liga'
+    }));
+
+    this.predictions = predictions.sort((a, b) => {
+      if (a.status === 'pending' && b.status !== 'pending') return -1;
+      if (a.status !== 'pending' && b.status === 'pending') return 1;
+      return 0;
     });
   }
 
-  setFilter(status: 'Todos' | Status) {
-    this.filterStatus = status;
+  private mapBetStatus(status: string): 'pending' | 'correct' | 'incorrect' {
+    switch (status) {
+      case 'win': return 'correct';
+      case 'loss': return 'incorrect';
+      default: return 'pending';
+    }
   }
 
+  navigateToTeam(teamName: string) {
+    this.router.navigate(['/dashboard/team', teamName]);
+  }
 }

@@ -1,47 +1,50 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth-service';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { arrowForward } from 'ionicons/icons';
+import { AuthService } from '../../../services/auth-service';
+import { NotificationService } from '../../../services/notification.service';
 
 @Component({
-  standalone: true,
-  imports: [ReactiveFormsModule],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, IonIcon]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  animate = false;
 
-  private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private notificationService: NotificationService
+  ) {
+    addIcons({ arrowForward });
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
 
-  isLoading = false;
-  errorMessage: string | null = null;
-
-  loginForm = this.fb.group({
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required]]
-  });
+  ngOnInit() {
+    // Retraso mínimo para asegurar que la animación se vea al entrar a la ruta
+    setTimeout(() => this.animate = true, 100);
+  }
 
   async onSubmit() {
-    if (this.loginForm.invalid) return;
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
 
-    this.isLoading = true;
-    this.errorMessage = null;
-
-    const { username, password } = this.loginForm.value;
-
-    try {
-      if (username && password) {
-        await this.authService.login({ username, password });
-        
-        this.router.navigate(['/dashboard']);
+      try {
+        await this.authService.login({ email, password });
+        this.router.navigate(['/dashboard/panel']);
+      } catch (error: any) {
+        const errorMessage = error.message || 'Ha ocurrido un error en el inicio de sesión';
+        this.notificationService.showAlert(errorMessage, 'error');
       }
-    } catch (error: any) {
-      this.errorMessage = error.message;
-    } finally {
-      this.isLoading = false;
     }
+
   }
 }

@@ -1,51 +1,59 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { SidebarComponent } from "src/app/components/sidebar/sidebar.component";
-import { HeaderComponent } from "src/app/components/header/header.component";
-import { UserRank } from 'src/app/types/types';
+import { CommonModule } from '@angular/common';
+import { IonIcon } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { trophy, medal, star } from 'ionicons/icons';
+import { UserService } from '../../../services/user.service';
+import { UserRanking } from '../../../types/types';
 
 @Component({
   selector: 'app-ranking',
+  standalone: true,
+  imports: [CommonModule, IonIcon],
   templateUrl: './ranking.component.html',
-  styleUrls: ['./ranking.component.scss'],
-  imports: [SidebarComponent, HeaderComponent],
+  styleUrls: ['./ranking.component.scss']
 })
-export class RankingComponent  implements OnInit {
+export class RankingComponent implements OnInit {
+  players: (UserRanking & { position: number })[] = [];
+  isLoading = true;
 
-  top3 = signal<UserRank[]>([]);
-  restOfPlayers = signal<UserRank[]>([]);
-  isLoading = signal(true);
+  constructor(private userService: UserService) {
+    addIcons({ trophy, medal, star });
+  }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.loadRanking();
+  }
+
+  async loadRanking() {
     try {
-      // 1. Obtener datos reales (o Mock si falla)
-      let data: UserRank[] = this.getMockData();
-     
+      this.isLoading = true;
+      const ranking = await this.userService.getLeaderboard();
 
-      // 2. Procesar datos (Asignar posición real)
-      const rankedData = data.map((user, index) => ({
+      this.players = ranking.map((user, index) => ({
         ...user,
+        avatar: user.avatar || 'https://img.freepik.com/free-vector/football-soccer-tournament-vector-logo-design_47987-24746.jpg?semt=ais_user_personalization&w=740&q=80',
         position: index + 1
       }));
-
-      // 3. Separar el Podio del resto
-      this.top3.set(rankedData.slice(0, 3));
-      this.restOfPlayers.set(rankedData.slice(3));
-
+    } catch (error) {
+      console.error('Error loading ranking:', error);
     } finally {
-      this.isLoading.set(false);
+      this.isLoading = false;
     }
   }
 
-  getMockData(): UserRank[] {
-    return [
-      { id: 1, username: 'CryptoKing', points: 15400, avatar: 'assets/avatars/1.png' },
-      { id: 2, username: 'MollyFan', points: 12350, avatar: 'assets/avatars/2.png' },
-      { id: 3, username: 'ElBicho7', points: 9800, avatar: 'assets/avatars/3.png' },
-      { id: 4, username: 'ApuestaSegura', points: 8500, avatar: 'assets/avatars/4.png' },
-      { id: 5, username: 'Benzema15', points: 7200, avatar: 'assets/avatars/5.png' },
-      { id: 6, username: 'Novato_22', points: 4100, avatar: 'assets/avatars/6.png' },
-      { id: 7, username: 'User_X', points: 200, avatar: 'assets/avatars/7.png' },
-    ];
+  getTopThree() {
+    return this.players.slice(0, 3);
   }
 
+  getAllPlayers() {
+    return this.players;
+  }
+
+  getPodiumOrder() {
+    const top = this.getTopThree();
+    if (top.length < 3) return top;
+    // Orden para el podio: 2º, 1º, 3º (para que el 1º esté en el centro más alto)
+    return [top[1], top[0], top[2]];
+  }
 }

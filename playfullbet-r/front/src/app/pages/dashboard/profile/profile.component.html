@@ -1,65 +1,47 @@
-<app-header></app-header>
-<app-sidebar></app-sidebar>
-
 <div class="profile-container">
-  
-  <header class="page-header">
-    <h1>Perfil de Jugador</h1>
-    <span class="user-id">ID: #000001</span>
-  </header>
 
-  <div class="profile-card-vertical">
-    
-    <div class="identity-section">
-      <div class="avatar-wrapper">
-        <img src="assets/default-avatar.png" alt="Avatar" class="avatar-xl">
-        <button class="edit-btn">✎</button>
-      </div>
-      
-      <div class="user-details">
-        <span class="rank-badge">👑 TOP 3</span>
-        <h2>Alejandro</h2>
-        <p class="email">alex.vip@mollys.com</p>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="stats-row">
-      <div class="stat-item">
-        <div class="icon-circle gold">🏆</div>
-        <div class="stat-info">
-          <span class="value">68.5%</span>
-          <span class="label">Ratio Victoria</span>
-        </div>
-      </div>
-      
-      <div class="stat-separator"></div>
-
-      <div class="stat-item">
-        <div class="icon-circle dark">💰</div>
-        <div class="stat-info">
-          <span class="value">12,500</span>
-          <span class="label">Puntos</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="badges-section">
-      <h3>Insignias Recientes</h3>
-      <div class="badges-grid">
-        <div class="badge-item" title="Racha Ganadora">🔥</div>
-        <div class="badge-item" title="Experto en La Liga">🇪🇸</div>
-        <div class="badge-item" title="Francotirador">🎯</div>
-        <button class="add-badge">+</button>
-      </div>
-    </div>
-
-    <button class="btn-logout">
-      Cerrar Sesión
-    </button>
-
+  @if (isLoading) {
+  <div class="loading-state">
+    <p>Cargando perfil...</p>
   </div>
+  }
+
+  @if (!isLoading && userProfile) {
+  <div class="profile-card">
+    <div class="avatar-section">
+      <div class="avatar-wrapper">
+        <img [src]="userProfile.avatar" [alt]="userProfile.name" class="user-avatar">
+        @if (userProfile.rank > 0) {
+        <div class="rank-badge">
+          <ion-icon name="trophy"></ion-icon>
+          #{{ userProfile.rank }}
+        </div>
+        }
+      </div>
+      <h2 class="user-name">{{ userProfile.name }}</h2>
+    </div>
+
+    <div class="points-section">
+      <div class="points-card">
+        <ion-icon name="star"></ion-icon>
+        <div class="points-info">
+          <span class="points-label">PUNTOS TOTALES</span>
+          <span class="points-value">{{ userProfile.points }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">APUESTAS</span>
+        <span class="stat-value">{{ userProfile.totalBets }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">ACIERTOS</span>
+        <span class="stat-value">{{ (userProfile.winRate * 100).toFixed(1) }}%</span>
+      </div>
+    </div>
+  </div>
+  }
+
 </div>

@@ -1,226 +1,162 @@
-@import '../../../../theme/variables.scss';
-
 :host {
   display: block;
-  height: 100vh;
 }
 
-// Contenedor Principal
-.register-container, .login-container {
-  position: relative;
-  height: 100%;
+.right-panel {
+  background-color: var(--c-white);
+  padding: 4rem;
+}
+
+.form-wrapper {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $obsidian; // Ahora es gris claro (#f8f9fa)
-  overflow: hidden;
+  max-width: 500px;
+  margin: 0 auto;
+  border: var(--c-border);
+  padding: 2rem;
+  box-shadow: 10px 10px 0 #000;
+  background: #fff;
 }
 
-// Fondo decorativo
-.background-overlay {
-  position: absolute;
-  inset: 0;
-  // Usamos una imagen sutil o un degradado elegante
-  background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
-  z-index: 0;
-  
-  // Opcional: Si usas una imagen de fondo, ponle un velo blanco encima
-  // background-image: url('/assets/stadium-light.jpg');
-  // &::after {
-  //   content: ''; position: absolute; inset: 0;
-  //   background: rgba(255, 255, 255, 0.85); // Velo blanco
-  // }
-}
-
-// Tarjeta de Cristal (Ahora es Cristal Blanco)
-.card-glass {
-  position: relative;
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.9); // Blanco translúcido
-  backdrop-filter: blur(20px);
-  border: 1px solid #ffffff; // Borde blanco puro
-  padding: 3rem 2.5rem;
-  width: 100%;
-  max-width: 420px;
-  // Sombra elegante y suave (clave para el modo claro)
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1); 
-  border-radius: 12px;
-}
-
+/* Header & Stepper */
 .header {
-  text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 3px solid #000;
+  padding-bottom: 1rem;
+}
 
-  .brand-title {
-    font-family: $font-serif;
-    color: $text-light; // Gris Oscuro (#1a202c)
-    font-size: 2rem;
-    letter-spacing: 1px;
-    margin: 0;
-    
-    .accent {
-      color: $gold;
-      font-style: italic;
-    }
-  }
+h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0;
+  color: var(--c-black);
+  letter-spacing: -1px;
+  text-transform: uppercase;
+}
 
-  .subtitle {
-    font-family: $font-sans;
-    color: $text-muted; // Gris medio
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 0.5rem;
-    font-weight: 500;
-  }
+/* Inputs */
+.row-inputs {
+  display: flex;
+  gap: 1.5rem;
 }
 
 .input-group {
   position: relative;
-  margin-bottom: 2rem;
-
-  label {
-    display: block;
-    font-family: $font-sans;
-    color: $text-muted; // Etiqueta sutil
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.5rem;
-  }
-
-  input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    // Línea base gris claro
-    border-bottom: 2px solid #e2e8f0; 
-    padding: 0.5rem 0;
-    color: $text-light; // Texto oscuro al escribir
-    font-family: $font-sans;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-
-    &:focus {
-      outline: none;
-      // El focus-line lo maneja el div de abajo, pero quitamos el borde base visualmente
-      border-bottom-color: transparent; 
-    }
-    
-    &::placeholder {
-      color: #cbd5e0; // Placeholder gris muy claro
-    }
-  }
-
-  // Animación de línea dorada
-  .focus-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: $gold;
-    transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    box-shadow: 0 2px 4px rgba($gold, 0.2);
-  }
-
-  input:focus ~ .focus-line {
-    width: 100%;
-  }
-}
-
-// Botón Principal
-button {
+  margin-bottom: 2rem; // Espacio extra para el mensaje de error
   width: 100%;
-  background: $gold;
-  color: white; // Texto blanco sobre dorado se ve muy Premium
-  border: none;
-  padding: 1rem;
-  font-family: $font-sans;
-  font-weight: 700;
+}
+
+label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: var(--c-black);
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  margin-top: 1rem;
-  border-radius: 6px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s;
-  
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -5px rgba($gold, 0.4);
-    background: darken($gold, 5%);
+}
+
+input {
+  width: 100%;
+  border: 2px solid #000;
+  padding: 12px 16px;
+  font-size: 1.1rem;
+  font-family: 'Kanit';
+  font-weight: 500;
+  outline: none;
+  background: #f8f8f8;
+  color: var(--c-black);
+  transition: all 0.2s ease;
+
+  &:focus {
+    background: #fff;
+    box-shadow: 4px 4px 0 #000;
+    transform: translate(-2px, -2px);
   }
 
-  &:disabled {
-    background: #e2e8f0;
-    color: #a0aec0;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+  &::placeholder {
+    color: #999;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: #ff3b30;
+    background: #fff5f5;
   }
 }
 
-// Mensajes de Error
-.error-banner {
-  background: #fff5f5; // Rojo muy pálido
-  border-left: 3px solid #e53e3e; // Rojo vivo
-  color: #c53030; // Rojo oscuro texto
-  padding: 0.75rem;
-  font-family: $font-sans;
-  font-size: 0.85rem;
-  margin-bottom: 1.5rem;
+/* Mensajes de error y validación */
+.error-msg {
+  position: absolute;
+  bottom: -22px;
+  left: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ff3b30;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 4px;
+  gap: 5px;
+
+  &::before {
+    content: '!';
+    background: #ff3b30;
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
 }
 
-// Footer y Enlaces
-.footer-ref, .auth-links {
-  text-align: center;
-  margin-top: 2rem;
-  color: $text-muted;
-  font-family: $font-sans;
-  font-size: 0.75rem;
-}
-
-.auth-links {
+/* Botón */
+.action-btn {
+  width: 100%;
+  background: var(--c-yellow);
+  border: 3px solid #000;
+  padding: 1rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  box-shadow: 5px 5px 0px #000;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  
-  a {
-    text-decoration: none;
-    transition: color 0.2s;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.1s;
+  text-transform: uppercase;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0px #000;
   }
 
-  .gold-link {
-    color: darken($gold, 5%);
-    font-weight: 600;
-    &:hover { color: darken($gold, 15%); text-decoration: underline; }
-  }
-
-  .faint-link {
-    color: #a0aec0;
-    &:hover { color: $text-muted; }
+  &:active {
+    transform: translate(0, 0);
+    box-shadow: 3px 3px 0 #000;
   }
 }
 
-// Spinner
-.spinner {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border: 2px solid rgba(255,255,255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s linear infinite;
-  margin-right: 8px;
-}
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .right-panel {
+    padding: 3rem 2rem;
+    flex: 2;
+  }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+  .row-inputs {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-wrapper {
+    box-shadow: 6px 6px 0 #000;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
 }

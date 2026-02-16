@@ -1,67 +1,205 @@
 export interface RegisterData {
-    username: string;
-    email: string;
-    password: string;
+  username: string;
+  email: string;
+  password: string;
 }
 
 export interface LoginData {
-    username: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface Team {
   id: string;
   name: string;
-  logoUrl: string; 
+  logoUrl: string;
 }
 
-interface Score {
-    home: number; 
-    away: number 
-}
+export type MatchStatus = 'pending' | 'live' | 'finished';
+export type BetStatus = 'pending' | 'win' | 'loss';
+export type EventType = 'goal' | 'card';
+export type CardType = 'yellow' | 'red';
 
-export type Status = 'Próximos' | 'En vivo' | 'Finalizados'
-
-export interface Match {
-  id: string;
-  homeTeam: Team;
-  awayTeam: Team;
-  score: Score;
-  status: Status;
-  date: string; 
-  matchday: number;
-  lastScorer?: string;
-  league: string; 
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  points: number;
+  avatar: string;
+  rank?: number;
+  token?: string;
 }
 
 export interface MatchEvent {
-  id: number;
-  type: 'goal' | 'card';
-  player: string;
-  playerAvatar: string; // URL del avatar
-  teamId: string; // 'home' o 'away'
+  type: EventType;
   minute: number;
+  team: string;
+  player: string;
+  playerId?: number;
+  playerAvatar?: string;
+  score?: string;
+  cardType?: CardType;
+  text?: string;
+  isSecondYellow?: boolean;
 }
 
-export interface ChatMessage {
+export type MatchDetail = Match;
+
+export interface Match {
   id: number;
-  user: string;
-  avatar: string; // URL avatar
-  text: string;
-  timestamp: Date;
-  isMe?: boolean; // Para estilar diferente mis mensajes
-}
-
-// Extender Match para incluir eventos (mock)
-export interface MatchDetail extends Match {
+  jornada: number;
+  home: string;
+  away: string;
+  homeScore: number;
+  awayScore: number;
+  status: MatchStatus;
+  time: string;
+  league: string;
   events: MatchEvent[];
 }
 
-export interface TeamStats {
-  position: number;
-  teamId: string;
-  teamName: string;
-  logoUrl: string;
+export interface Bet {
+  id: number;
+  userId: number;
+  matchId: number;
+  homeScore: number;
+  awayScore: number;
+  pointsEarned: number;
+}
+
+export interface EnrichedBet extends Bet {
+  match: Match | null;
+  status: BetStatus;
+}
+
+export interface TeamStanding {
+  name: string;
+  strength: number;
+  pj: number;
+  pg: number;
+  pe: number;
+  pp: number;
+  gf: number;
+  gc: number;
+  pts: number;
+}
+
+export interface Player {
+  id: number;
+  name: string;
+  team_name: string;
+  avatar_url: string;
+  goals: number;
+  yellow_cards?: number;
+  red_cards?: number;
+}
+
+export interface ChatMessage {
+  id?: number;
+  matchId: number;
+  username: string;
+  user: string;
+  avatar: string;
+  text: string;
+  time: string;
+  isMe: boolean;
+}
+
+export interface SimulationState {
+  currentJornada: number;
+  leagueStarted: boolean;
+  lastJornadaStart: number | null;
+  jornadas?: any[];
+}
+
+export interface Notification {
+  id: number;
+  userId: number;
+  title: string;
+  message: string;
+  createdAt: string;
+}
+
+export interface UserStats {
+  totalPoints: number;
+  winRate: number;
+  totalBets: number;
+}
+
+export interface Prediction {
+  id: string;
+  matchId: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeTeamLogo: string;
+  awayTeamLogo: string;
+  predictedScore: { home: number; away: number };
+  actualScore: { home: number; away: number } | null;
+  status: 'pending' | 'correct' | 'incorrect';
+  pointsEarned: number;
+  date: string;
+  league: string;
+}
+
+// DTOs de Servicio e Interfaces
+export interface AuthResponse {
+  token: string;
+  user: User;
+}
+
+export interface UserRanking {
+  id: number;
+  username: string;
+  points: number;
+  avatar: string;
+}
+
+export interface UpdateProfileDto {
+  username?: string;
+  avatar?: string;
+}
+
+export interface ChatMessageDto {
+  matchId: number;
+  username: string;
+  text: string;
+}
+
+export interface BetDto {
+  userId: number;
+  matchId: number;
+  homeScore: number;
+  awayScore: number;
+}
+
+export interface UserProfile {
+  name: string;
+  avatar: string;
+  points: number;
+  rank: number;
+  totalBets: number;
+  winRate: number;
+}
+
+export interface DisplayMatch {
+  id: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeLogo: string;
+  awayLogo: string;
+  status: 'UPCOMING' | 'LIVE' | 'FINISHED';
+  score?: {
+    home: number;
+    away: number;
+  };
+  matchTime?: string;
+  league: string;
+  dateTime?: Date;
+}
+
+export interface Standing {
+  pos: number;
+  team: string;
   played: number;
   won: number;
   drawn: number;
@@ -69,23 +207,55 @@ export interface TeamStats {
   gf: number;
   gc: number;
   pts: number;
-  form: ('w' | 'd' | 'l')[]; // Para los puntos de racha
 }
 
-export interface UserRank {
-  id: number;
-  username: string;
-  avatar: string; // URL o nombre del asset
+export interface ClassificationTeamStats {
+  position: number;
+  team: string;
+  logo: string;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDifference: number;
   points: number;
-  position?: number; // Lo calcularemos en el front si no viene
 }
 
-export interface UserProfile {
+export interface MatchdayMatch {
   id: number;
-  username: string;
-  email: string;
-  avatarUrl: string;
-  points: number;       // El saldo actual
-  winRate: number;      // Porcentaje de victorias
-  rank: string;
+  homeTeam: string;
+  awayTeam: string;
+  homeLogo: string;
+  awayLogo: string;
+  homeScore?: number;
+  awayScore?: number;
+  status: 'UPCOMING' | 'LIVE' | 'FINISHED';
+  date: Date;
+}
+
+export interface BetData {
+  homeScore: number;
+  awayScore: number;
+}
+
+export interface Alert {
+  id?: string;
+  type: 'success' | 'error' | 'info';
+  message: string;
+  icon?: string;
+}
+
+export interface TeamDetailStats {
+  position: number;
+  played: number;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalDifference: number;
+  points: number;
+  winPercentage: number;
 }
