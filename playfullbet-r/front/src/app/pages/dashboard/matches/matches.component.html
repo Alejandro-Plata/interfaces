@@ -85,10 +85,11 @@
                 <button class="btn-bet" [routerLink]="['/dashboard/match', match.id]" [queryParams]="{ action: 'bet' }">
                     APOSTAR <ion-icon name="chevron-forward"></ion-icon>
                 </button>
-                }
+                } @else {
                 <button class="btn-details" [routerLink]="['/dashboard/match', match.id]">
                     DETALLES
                 </button>
+                }
 
             </div>
 
