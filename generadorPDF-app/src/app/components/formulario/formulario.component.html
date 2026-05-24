@@ -1,0 +1,64 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+  <!-- Código -->
+  <div>
+    <label class="block text-sm font-semibold text-tinta">Código</label>
+    <input formControlName="code" placeholder="M-0001"
+           class="mt-1 w-full rounded border border-tinta/30 bg-pergamino/60
+                  px-3 py-2 font-mono text-tinta focus:outline-none
+                  focus:ring-2 focus:ring-tinta/50">
+    @if (form.get('code')?.touched && form.get('code')?.hasError('pattern')) {
+      <p class="text-xs text-sello">Formato requerido: M-0000</p>
+    }
+  </div>
+
+  <!-- Rango -->
+  <div>
+    <label class="block text-sm font-semibold text-tinta">Rango</label>
+    <select formControlName="rank"
+            class="mt-1 w-full rounded border border-tinta/30 bg-pergamino/60
+                   px-3 py-2 text-tinta">
+      <option value="D">D</option>
+      <option value="C">C</option>
+      <option value="B">B</option>
+      <option value="A">A</option>
+      <option value="S">S (con sello oficial)</option>
+    </select>
+  </div>
+
+  <!-- Encargado -->
+  <div>
+    <label class="block text-sm font-semibold text-tinta">Encargado</label>
+    <input formControlName="agent"
+           class="mt-1 w-full rounded border border-tinta/30 bg-pergamino/60
+                  px-3 py-2 text-tinta">
+    @if (form.get('agent')?.touched && form.get('agent')?.hasError('minlength')) {
+      <p class="text-xs text-sello">Mínimo 3 caracteres.</p>
+    }
+  </div>
+
+  <!-- Fecha -->
+  <div>
+    <label class="block text-sm font-semibold text-tinta">Fecha</label>
+    <input type="date" formControlName="date"
+           class="mt-1 w-full rounded border border-tinta/30 bg-pergamino/60
+                  px-3 py-2 text-tinta">
+  </div>
+
+  <!-- Objetivo  -->
+  <div>
+    <label class="block text-sm font-semibold text-tinta">Objetivo</label>
+    <textarea formControlName="objective" rows="6"
+              class="mt-1 w-full rounded border border-tinta/30 bg-pergamino/60
+                     px-3 py-2 text-tinta"></textarea>
+    @if (form.get('objective')?.touched && form.get('objective')?.hasError('minlength')) {
+      <p class="text-xs text-sello">Describe la misión con al menos 5 caracteres.</p>
+    }
+  </div>
+
+  <button type="submit" [disabled]="form.invalid"
+          class="w-full rounded bg-tinta px-4 py-2 font-gothic uppercase
+                 tracking-widest text-pergamino transition
+                 hover:bg-sello disabled:cursor-not-allowed disabled:opacity-40">
+    Generar y descargar
+  </button>
+</form>

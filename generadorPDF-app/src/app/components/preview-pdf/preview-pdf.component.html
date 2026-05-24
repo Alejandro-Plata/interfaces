@@ -1,0 +1,13 @@
+<div class="h-full w-full rounded border border-tinta/30 bg-tinta/5 p-2">
+  @if (url) {
+    <iframe [src]="url"
+            class="h-full w-full rounded bg-white"
+            title="Previsualización del documento">
+    </iframe>
+  } @else {
+    <div class="flex h-full w-full items-center justify-center
+                text-sm italic text-white">
+      Completa el formulario para ver el documento
+    </div>
+  }
+</div>
