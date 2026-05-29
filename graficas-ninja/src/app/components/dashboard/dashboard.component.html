@@ -1,0 +1,31 @@
+<div class="anbu-dashboard">
+  <div class="area-kpi1">
+    <app-kpi-card titulo="Stock Total" [valor]="stats.totalStock"></app-kpi-card>
+  </div>
+  <div class="area-kpi2">
+    <app-kpi-card titulo="Valor Total" [valor]="stats.totalValor" sufijo="¥"></app-kpi-card>
+  </div>
+  <div class="area-kpi3">
+    <app-kpi-card titulo="Stock Crítico" [valor]="stats.bajoStock" [critico]="stats.bajoStock > 0"></app-kpi-card>
+  </div>
+  <div class="area-kpi4">
+    <app-kpi-card titulo="Categoría Principal" [valor]="stats.categoriaPrincipal"></app-kpi-card>
+  </div>
+
+  <div class="area-chart-bar anbu-chart-card">
+    <p class="chart-label">Valor de Inventario por Categoría</p>
+    <app-grafico-barras [categorias]="grafCategorias" [valores]="grafValores"></app-grafico-barras>
+  </div>
+  <div class="area-chart-radar anbu-chart-card">
+    <p class="chart-label">Stock por Categoría (Radar)</p>
+    <app-grafico-radar [categorias]="grafCategorias" [valores]="grafStock"></app-grafico-radar>
+  </div>                          
+  <div class="area-chart-sectores anbu-chart-card">
+    <p class="chart-label">Distribución de Stock</p>
+    <app-grafico-sectores [categorias]="grafCategorias" [valores]="grafStock"></app-grafico-sectores>
+  </div>
+
+  <div class="area-inventory">
+    <app-tabla-inventario [suministros]="suministros" (dataChanged)="refrescar()"></app-tabla-inventario>
+  </div>
+</div>

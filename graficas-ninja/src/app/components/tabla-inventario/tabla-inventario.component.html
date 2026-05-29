@@ -1,0 +1,118 @@
+<div class="tabla-container">
+
+  <!-- Cabecera -->
+  <div class="tabla-header">
+    <h3 class="tabla-titulo">⚔ Inventario de Suministros</h3>
+    <div class="header-actions">
+      <ion-button size="small" color="danger" fill="outline" (click)="abrirFormulario()">
+        + Nuevo
+      </ion-button>
+      <ion-button size="small" color="success" fill="outline" (click)="exportar('excel')" title="Exportar Excel">
+        <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+        Excel
+      </ion-button>
+      <ion-button size="small" color="danger" fill="outline" (click)="exportar('pdf')" title="Exportar PDF">
+        <ion-icon slot="start" name="cloud-download-outline"></ion-icon>
+        PDF
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-grid">
+    <input
+      class="anbu-input"
+      type="text"
+      placeholder="Buscar por nombre..."
+      [(ngModel)]="filtroTexto"
+      (ngModelChange)="onFiltroChange()"
+    />
+    <select class="anbu-select" [(ngModel)]="filtroCategoria" (ngModelChange)="onFiltroChange()">
+      <option value="">Todas las categorías</option>
+      @for (c of categorias; track c) {
+        <option [value]="c">{{ c }}</option>
+      }
+    </select>
+    <select class="anbu-select" [(ngModel)]="filtroRango" (ngModelChange)="onFiltroChange()">
+      <option value="">Todos los rangos</option>
+      @for (r of rangos; track r) {
+        <option [value]="r">{{ r }}</option>
+      }
+    </select>
+    <div class="rango-stock">
+      <input class="anbu-input rango-num" type="number" placeholder="Stock mín."
+        [(ngModel)]="stockMin" (ngModelChange)="onFiltroChange()" />
+      <span class="rango-sep">—</span>
+      <input class="anbu-input rango-num" type="number" placeholder="Stock máx."
+        [(ngModel)]="stockMax" (ngModelChange)="onFiltroChange()" />
+    </div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="tabla-scroll">
+    <table class="anbu-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" [checked]="todosPaginaSeleccionados" (change)="toggleTodos()" /></th>
+          <th (click)="ordenarPor('id')" [attr.aria-sort]="ordenCampo==='id' ? ordenDir : null">ID{{ indicador('id') }}</th>
+          <th (click)="ordenarPor('nombre')" [attr.aria-sort]="ordenCampo==='nombre' ? ordenDir : null">Nombre{{ indicador('nombre') }}</th>
+          <th (click)="ordenarPor('categoria')" [attr.aria-sort]="ordenCampo==='categoria' ? ordenDir : null">Categoría{{ indicador('categoria') }}</th>
+          <th (click)="ordenarPor('stock')" [attr.aria-sort]="ordenCampo==='stock' ? ordenDir : null">Stock{{ indicador('stock') }}</th>
+          <th (click)="ordenarPor('precioUnitario')" [attr.aria-sort]="ordenCampo==='precioUnitario' ? ordenDir : null">Precio{{ indicador('precioUnitario') }}</th>
+          <th (click)="ordenarPor('rangoRequerido')" [attr.aria-sort]="ordenCampo==='rangoRequerido' ? ordenDir : null">Rango{{ indicador('rangoRequerido') }}</th>
+          <th (click)="ordenarPor('ultimaActualizacion')" [attr.aria-sort]="ordenCampo==='ultimaActualizacion' ? ordenDir : null">Actualización{{ indicador('ultimaActualizacion') }}</th>
+          <th class="th-acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of filasVisibles; track s.id) {
+          <tr [class.stock-critico]="s.stock < 10">
+            <td><input type="checkbox" [checked]="seleccionados.has(s.id)" (change)="toggleSeleccion(s.id)" /></td>
+            <td class="id-cell">{{ s.id }}</td>
+            <td>{{ s.nombre }}</td>
+            <td>{{ s.categoria }}</td>
+            <td [class.valor-critico]="s.stock < 10">{{ s.stock }}</td>
+            <td>{{ s.precioUnitario }}¥</td>
+            <td>
+              <span [class]="'badge badge-' + s.rangoRequerido.toLowerCase()">
+                {{ s.rangoRequerido }}
+              </span>
+            </td>
+            <td class="fecha-cell">{{ s.ultimaActualizacion }}</td>
+            <td class="td-acciones">
+              <button class="btn-accion btn-editar" title="Editar" (click)="abrirFormulario(s)">✎</button>
+              <button class="btn-accion btn-eliminar" title="Eliminar" (click)="confirmarEliminar(s)">✕</button>
+            </td>
+          </tr>
+        }
+        @if (filasVisibles.length === 0) {
+          <tr>
+            <td colspan="9" class="sin-resultados">— Sin resultados para los filtros aplicados —</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="paginacion">
+    <div class="pag-info">{{ filtrados.length }} registros · página {{ pagina }} de {{ totalPaginas }}</div>
+    <div class="pag-controles">
+      <button class="pag-btn" [disabled]="pagina === 1" (click)="irPagina(pagina - 1)">‹</button>
+      @for (p of paginasArray; track p) {
+        <button class="pag-btn" [class.activo]="p === pagina" (click)="irPagina(p)">{{ p }}</button>
+      }
+      <button class="pag-btn" [disabled]="pagina === totalPaginas" (click)="irPagina(pagina + 1)">›</button>
+    </div>
+    <div class="pag-tamano">
+      <label>Filas:
+        <select class="anbu-select" [(ngModel)]="tamanoPagina" (ngModelChange)="onFiltroChange()">
+          @for (t of tamanos; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+      </label>
+    </div>
+  </div>
+
+</div>

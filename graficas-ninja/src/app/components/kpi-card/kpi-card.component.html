@@ -1,0 +1,9 @@
+<div class="kpi-card" [class.kpi-critico]="critico">
+  <p class="kpi-titulo">{{ titulo }}</p>
+  <p class="kpi-valor">
+    {{ valor }}
+    @if (sufijo) {
+      <span class="kpi-sufijo"> {{ sufijo }}</span>
+    }
+  </p>
+</div>

@@ -1,0 +1,100 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="cancelar()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ titulo }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="solid" color="danger" [disabled]="!valido()" (click)="guardar()">
+        Guardar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="form-content">
+  <div class="form-grid">
+
+    <div class="form-row">
+      <div class="form-group" [class.readonly]="!esNuevo">
+        <label class="form-label">ID</label>
+        <input
+          class="anbu-input"
+          type="text"
+          [(ngModel)]="form.id"
+          [readonly]="!esNuevo"
+          placeholder="S001"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Última Actualización</label>
+        <input
+          class="anbu-input"
+          type="date"
+          [(ngModel)]="form.ultimaActualizacion"
+        />
+      </div>
+    </div>
+
+    <div class="form-group full">
+      <label class="form-label">Nombre del Suministro</label>
+      <input
+        class="anbu-input"
+        type="text"
+        [(ngModel)]="form.nombre"
+        placeholder="Ej. Shuriken de Acero"
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Categoría</label>
+        <select class="anbu-select" [(ngModel)]="form.categoria">
+          @for (c of categorias; track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Rango Requerido</label>
+        <select class="anbu-select" [(ngModel)]="form.rangoRequerido">
+          @for (r of rangos; track r) {
+            <option [value]="r">{{ r }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Stock (unidades)</label>
+        <input class="anbu-input" type="number" min="0" [(ngModel)]="form.stock" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Precio Unitario (¥)</label>
+        <input class="anbu-input" type="number" min="0" [(ngModel)]="form.precioUnitario" />
+      </div>
+    </div>
+
+    @if (form.nombre) {
+      <div class="form-preview">
+        <p class="preview-label">Vista previa</p>
+        <p class="preview-nombre">{{ form.nombre }}</p>
+        <p class="preview-meta">
+          {{ form.categoria }} ·
+          <span [class]="'badge badge-' + form.rangoRequerido.toLowerCase()">
+            {{ form.rangoRequerido }}
+          </span>
+          · Stock: <strong [class.valor-critico]="form.stock < 10">{{ form.stock }}</strong>
+          · {{ form.precioUnitario }}¥
+        </p>
+      </div>
+    }
+
+  </div>
+</ion-content>

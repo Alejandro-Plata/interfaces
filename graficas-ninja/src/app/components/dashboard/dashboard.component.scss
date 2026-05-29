@@ -1,0 +1,77 @@
+.anbu-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas:
+    "kpi1 kpi2 kpi3 kpi4"
+    ". chart-radar chart-sectores ."
+    ". chart-bar chart-bar ."
+    ". chart-bar chart-bar ."
+    "inventory inventory inventory inventory"
+    "inventory inventory inventory inventory";
+  gap: 1.2rem;
+  padding: 1.2rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.area-kpi1           { grid-area: kpi1; }
+.area-kpi2           { grid-area: kpi2; }
+.area-kpi3           { grid-area: kpi3; }
+.area-kpi4           { grid-area: kpi4; }
+.area-chart-bar      { grid-area: chart-bar; }
+.area-chart-radar    { grid-area: chart-radar; }
+.area-chart-sectores { grid-area: chart-sectores; }
+.area-inventory      { grid-area: inventory; }
+
+.anbu-chart-card {
+  background: var(--anbu-card);
+  border-radius: 4px;
+  padding: 1rem;
+  border-top: 2px solid var(--anbu-accent);
+}
+
+/* Sectores: flex-column para que el gráfico crezca y se centre verticalmente */
+.area-chart-sectores .anbu-chart-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.chart-label {
+  margin: 0 0 0.6rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--anbu-text-dim);
+}
+
+@media (max-width: 900px) {
+  .anbu-dashboard {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "kpi1 kpi2"
+      "kpi3 kpi4"
+      "chart-bar chart-bar"
+      "chart-radar chart-sectores"
+      "inventory inventory";
+    padding: 0.8rem;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 540px) {
+  .anbu-dashboard {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "kpi1" "kpi2" "kpi3" "kpi4"
+      "chart-bar"
+      "chart-radar"
+      "chart-sectores"
+      "inventory";
+    padding: 0.6rem;
+    gap: 0.6rem;
+  }
+}
