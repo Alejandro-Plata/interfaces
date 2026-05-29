@@ -40,11 +40,10 @@
       }
     </select>
     <div class="rango-stock">
-      <input class="anbu-input rango-num" type="number" placeholder="Stock mín."
-        [(ngModel)]="stockMin" (ngModelChange)="onFiltroChange()" />
-      <span class="rango-sep">—</span>
-      <input class="anbu-input rango-num" type="number" placeholder="Stock máx."
-        [(ngModel)]="stockMax" (ngModelChange)="onFiltroChange()" />
+      <label class="rango-label">Stock mín.: <span class="rango-valor">{{ stockMin ?? 0 }}</span></label>
+      <input class="anbu-range" type="range" min="0" max="200" step="1"
+        [value]="stockMin ?? 0"
+        (input)="onStockMinChange($event)" />
     </div>
   </div>
 
@@ -103,15 +102,6 @@
         <button class="pag-btn" [class.activo]="p === pagina" (click)="irPagina(p)">{{ p }}</button>
       }
       <button class="pag-btn" [disabled]="pagina === totalPaginas" (click)="irPagina(pagina + 1)">›</button>
-    </div>
-    <div class="pag-tamano">
-      <label>Filas:
-        <select class="anbu-select" [(ngModel)]="tamanoPagina" (ngModelChange)="onFiltroChange()">
-          @for (t of tamanos; track t) {
-            <option [value]="t">{{ t }}</option>
-          }
-        </select>
-      </label>
     </div>
   </div>
 

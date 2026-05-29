@@ -23,13 +23,12 @@ export class TablaInventarioComponent implements OnInit, OnChanges {
   filtroCategoria: '' | Categoria = '';
   filtroRango: '' | Rango = '';
   stockMin: number | null = null;
-  stockMax: number | null = null;
 
   ordenCampo: OrdenCampo = 'nombre';
   ordenDir: OrdenDir = 'asc';
 
   pagina = 1;
-  tamanoPagina = 5;
+  readonly tamanoPagina = 10;
   totalPaginas = 1;
 
   seleccionados = new Set<string>();
@@ -38,7 +37,6 @@ export class TablaInventarioComponent implements OnInit, OnChanges {
 
   readonly categorias: Categoria[] = ['Armamento', 'Médico', 'Sigilo', 'Herramientas'];
   readonly rangos: Rango[] = ['Genin', 'Chunin', 'Jonin', 'Anbu'];
-  readonly tamanos = [5, 10, 25, 50];
 
   constructor(
     private exportacion: ExportacionService,
@@ -114,11 +112,8 @@ export class TablaInventarioComponent implements OnInit, OnChanges {
     if (this.filtroRango) {
       resultado = resultado.filter(s => s.rangoRequerido === this.filtroRango);
     }
-    if (this.stockMin !== null) {
+    if (this.stockMin !== null && this.stockMin > 0) {
       resultado = resultado.filter(s => s.stock >= this.stockMin!);
-    }
-    if (this.stockMax !== null) {
-      resultado = resultado.filter(s => s.stock <= this.stockMax!);
     }
 
     resultado.sort((a, b) => {
@@ -148,6 +143,11 @@ export class TablaInventarioComponent implements OnInit, OnChanges {
   irPagina(p: number) { this.pagina = p; this.recalcular(); }
 
   onFiltroChange() { this.pagina = 1; this.recalcular(); }
+
+  onStockMinChange(event: Event) {
+    this.stockMin = Number((event.target as HTMLInputElement).value);
+    this.onFiltroChange();
+  }
 
   toggleSeleccion(id: string) {
     this.seleccionados.has(id) ? this.seleccionados.delete(id) : this.seleccionados.add(id);

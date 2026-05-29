@@ -56,12 +56,52 @@
 
 .rango-stock {
   display: flex;
-  align-items: center;
-  gap: 0.3rem;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.rango-sep { color: var(--anbu-text-dim); font-size: 0.9rem; }
-.rango-num { flex: 1; min-width: 0; }
+.rango-label {
+  font-size: 0.75rem;
+  color: var(--anbu-text-dim);
+}
+
+.rango-valor {
+  color: var(--anbu-accent);
+  font-weight: 600;
+}
+
+.anbu-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--anbu-border);
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--anbu-accent);
+    cursor: pointer;
+    border: 2px solid var(--anbu-card);
+    box-shadow: 0 0 4px var(--anbu-accent);
+  }
+
+  &::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--anbu-accent);
+    cursor: pointer;
+    border: 2px solid var(--anbu-card);
+    box-shadow: 0 0 4px var(--anbu-accent);
+  }
+}
 
 /* Tabla */
 .tabla-scroll { overflow-x: auto; }
@@ -165,8 +205,3 @@
   &:disabled { opacity: 0.35; cursor: default; }
 }
 
-.pag-tamano {
-  font-size: 0.78rem;
-  color: var(--anbu-text-dim);
-  label { display: flex; align-items: center; gap: 0.4rem; }
-}
