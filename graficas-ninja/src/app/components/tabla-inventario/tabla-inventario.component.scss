@@ -1,3 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .tabla-container {
   background: var(--anbu-card);
   border-radius: 4px;
@@ -5,6 +12,10 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .tabla-header {
@@ -104,7 +115,12 @@
 }
 
 /* Tabla */
-.tabla-scroll { overflow-x: auto; }
+.tabla-scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
 
 .anbu-table {
   width: 100%;

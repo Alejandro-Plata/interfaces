@@ -1,8 +1,13 @@
-:host { 
-  display: block; 
-  height: 100%; 
-} 
+:host {
+  display: block;
+  height: 100%;
+}
 
-.anbu-content { 
-  --background: var(--anbu-bg); 
+.anbu-content {
+  --background: var(--anbu-bg);
+}
+
+.anbu-content::part(scroll) {
+  display: flex;
+  flex-direction: column;
 }

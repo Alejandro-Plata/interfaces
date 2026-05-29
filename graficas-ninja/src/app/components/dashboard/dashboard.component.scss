@@ -1,19 +1,25 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .anbu-dashboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto auto auto auto 1fr;
   grid-template-areas:
     "kpi1 kpi2 kpi3 kpi4"
     ". chart-radar chart-sectores ."
     ". chart-bar chart-bar ."
     ". chart-bar chart-bar ."
-    "inventory inventory inventory inventory"
     "inventory inventory inventory inventory";
   gap: 1.2rem;
   padding: 1.2rem;
+  height: 100%;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .area-kpi1           { grid-area: kpi1; }
@@ -23,7 +29,7 @@
 .area-chart-bar      { grid-area: chart-bar; }
 .area-chart-radar    { grid-area: chart-radar; }
 .area-chart-sectores { grid-area: chart-sectores; }
-.area-inventory      { grid-area: inventory; }
+.area-inventory      { grid-area: inventory; display: flex; flex-direction: column; min-height: 0; }
 
 .anbu-chart-card {
   background: var(--anbu-card);
@@ -51,6 +57,7 @@
 @media (max-width: 900px) {
   .anbu-dashboard {
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto 1fr;
     grid-template-areas:
       "kpi1 kpi2"
       "kpi3 kpi4"
@@ -65,6 +72,7 @@
 @media (max-width: 540px) {
   .anbu-dashboard {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto auto auto 1fr;
     grid-template-areas:
       "kpi1" "kpi2" "kpi3" "kpi4"
       "chart-bar"
